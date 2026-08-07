@@ -211,3 +211,81 @@ async def get_total_users():
         result = await cursor.fetchone()
 
         return result[0]
+        async def complete_airdrop(telegram_id):
+
+    async with aiosqlite.connect(DATABASE_NAME) as db:
+
+        await db.execute(
+            """
+            UPDATE users
+
+            SET
+                airdrop_completed = 1,
+                balance = balance + 3000
+
+            WHERE telegram_id = ?
+            """,
+            (telegram_id,)
+        )
+
+        await db.commit()
+
+
+async def get_ref_code(telegram_id):
+
+    async with aiosqlite.connect(DATABASE_NAME) as db:
+
+        cursor = await db.execute(
+            """
+            SELECT ref_code
+            FROM users
+            WHERE telegram_id = ?
+            """,
+            (telegram_id,)
+        )
+
+        result = await cursor.fetchone()
+
+        if result:
+            return result[0]
+
+        return None
+
+
+async def get_account(telegram_id):
+
+    async with aiosqlite.connect(DATABASE_NAME) as db:
+
+        db.row_factory = aiosqlite.Row
+
+        cursor = await db.execute(
+            """
+            SELECT *
+            FROM users
+            WHERE telegram_id = ?
+            """,
+            (telegram_id,)
+        )
+
+        return await cursor.fetchone()
+
+
+async def increase_invite(ref_code):
+
+    async with aiosqlite.connect(DATABASE_NAME) as db:
+
+        await db.execute(
+            """
+            UPDATE users
+
+            SET
+                invite_count = invite_count + 1,
+                referral_reward = referral_reward + 500,
+                balance = balance + 500
+
+            WHERE ref_code = ?
+            """,
+            (ref_code,)
+        )
+
+        await db.commit()
