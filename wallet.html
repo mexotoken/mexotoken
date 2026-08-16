@@ -249,9 +249,9 @@ body {
     box-shadow: 0 0 0 2px rgba(232,189,0,.08);
 }
 
-.address-input.mismatch {
-    border-color: #ff6464;
-    box-shadow: 0 0 0 2px rgba(255,70,70,.08);
+.address-input.connected-priority {
+    border-color: rgba(40,200,120,.45);
+    background: #0b1712;
 }
 
 .confirm-btn {
@@ -651,12 +651,20 @@ const CONNECTED_STORAGE_KEY =
 
 
 /* ==========================================================
+   TON CONNECT OBJECT
+========================================================== */
+
+let tonConnectUI = null;
+
+
+/* ==========================================================
    STATUS
 ========================================================== */
 
 function setStatus(message, type) {
 
-    statusBox.textContent = message;
+    statusBox.textContent =
+        message;
 
     statusBox.className =
         "status " + (type || "");
@@ -670,7 +678,9 @@ function setStatus(message, type) {
 
 function normalizeAddress(address) {
 
-    return String(address || "").trim();
+    return String(
+        address || ""
+    ).trim();
 
 }
 
@@ -684,12 +694,6 @@ function isValidTonAddress(address) {
     address =
         normalizeAddress(address);
 
-    /*
-       Friendly TON address:
-       EQ + 46 characters
-       UQ + 46 characters
-    */
-
     if (
         /^(EQ|UQ)[A-Za-z0-9_-]{46}$/.test(address)
     ) {
@@ -697,12 +701,6 @@ function isValidTonAddress(address) {
         return true;
 
     }
-
-
-    /*
-       Raw TON address:
-       0: + 64 hexadecimal characters
-    */
 
     if (
         /^0:[a-fA-F0-9]{64}$/.test(address)
@@ -712,14 +710,13 @@ function isValidTonAddress(address) {
 
     }
 
-
     return false;
 
 }
 
 
 /* ==========================================================
-   SAVE ADDRESS LOCALLY
+   SAVE SELECTED ADDRESS
 ========================================================== */
 
 function saveAddress(address) {
@@ -752,25 +749,26 @@ function saveAddress(address) {
 
 
 /* ==========================================================
-   LOAD PREVIOUS ADDRESS
+   LOAD SELECTED ADDRESS
 ========================================================== */
 
 function loadSavedAddress() {
 
     try {
 
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
+        const address =
+            normalizeAddress(
+                localStorage.getItem(
+                    STORAGE_KEY
+                )
             );
 
         if (
-            saved &&
-            isValidTonAddress(saved)
+            address &&
+            isValidTonAddress(address)
         ) {
 
-            addressInput.value =
-                saved;
+            return address;
 
         }
 
@@ -778,11 +776,13 @@ function loadSavedAddress() {
     catch (error) {
 
         console.warn(
-            "Could not load wallet address:",
+            "Could not load saved wallet:",
             error
         );
 
     }
+
+    return "";
 
 }
 
@@ -845,31 +845,6 @@ function loadConnectedWallet() {
 
 
 /* ==========================================================
-   CLEAR CONNECTED WALLET
-========================================================== */
-
-function clearConnectedWallet() {
-
-    try {
-
-        localStorage.removeItem(
-            CONNECTED_STORAGE_KEY
-        );
-
-    }
-    catch (error) {
-
-        console.warn(
-            "Could not clear connected wallet:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================================
    SHOW CONNECTED WALLET
 ========================================================== */
 
@@ -888,6 +863,120 @@ function showConnectedWallet(address) {
     connectedBox.style.display =
         "block";
 
+    addressInput.value =
+        address;
+
+    addressInput.classList.add(
+        "connected-priority"
+    );
+
+}
+
+
+/* ==========================================================
+   GET CURRENT CONNECTED WALLET
+========================================================== */
+
+function getCurrentConnectedWallet() {
+
+    /*
+       The live TON Connect wallet has absolute priority.
+    */
+
+    if (
+        tonConnectUI &&
+        tonConnectUI.wallet &&
+        tonConnectUI.wallet.account &&
+        tonConnectUI.wallet.account.address
+    ) {
+
+        const liveAddress =
+            normalizeAddress(
+                tonConnectUI.wallet.account.address
+            );
+
+        if (
+            liveAddress &&
+            isValidTonAddress(liveAddress)
+        ) {
+
+            return liveAddress;
+
+        }
+
+    }
+
+
+    /*
+       If TON Connect has not restored yet,
+       use the previously connected wallet.
+    */
+
+    const savedConnected =
+        loadConnectedWallet();
+
+    if (
+        savedConnected &&
+        isValidTonAddress(
+            savedConnected
+        )
+    ) {
+
+        return savedConnected;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* ==========================================================
+   APPLY CONNECTED WALLET PRIORITY
+========================================================== */
+
+function applyConnectedWalletPriority(address) {
+
+    address =
+        normalizeAddress(address);
+
+    if (
+        !address ||
+        !isValidTonAddress(address)
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       DIRECT CONNECTION ALWAYS WINS.
+       Any manually stored address is replaced.
+    */
+
+    saveConnectedWallet(
+        address
+    );
+
+    saveAddress(
+        address
+    );
+
+    addressInput.value =
+        address;
+
+    showConnectedWallet(
+        address
+    );
+
+
+    setStatus(
+        "Connected wallet selected.",
+        "success"
+    );
+
 }
 
 
@@ -905,18 +994,10 @@ function returnToBot(address) {
     }
 
 
-    /*
-       Save the selected wallet locally.
-       This allows the address to remain visible
-       if the wallet page is opened again.
-    */
+    saveAddress(
+        address
+    );
 
-    saveAddress(address);
-
-
-    /*
-       Telegram Web App communication.
-    */
 
     if (
         tg &&
@@ -973,12 +1054,10 @@ function returnToBot(address) {
     }
 
 
-    /*
-       Browser fallback.
-    */
-
     const encodedAddress =
-        encodeURIComponent(address);
+        encodeURIComponent(
+            address
+        );
 
     window.location.href =
         "https://t.me/" +
@@ -1008,10 +1087,6 @@ confirmBtn.addEventListener(
         );
 
 
-        /* ------------------------------------------
-           EMPTY
-        ------------------------------------------ */
-
         if (!manualAddress) {
 
             setStatus(
@@ -1026,11 +1101,11 @@ confirmBtn.addEventListener(
         }
 
 
-        /* ------------------------------------------
-           FORMAT VALIDATION
-        ------------------------------------------ */
-
-        if (!isValidTonAddress(manualAddress)) {
+        if (
+            !isValidTonAddress(
+                manualAddress
+            )
+        ) {
 
             setStatus(
                 "Invalid TON wallet address.",
@@ -1044,79 +1119,89 @@ confirmBtn.addEventListener(
         }
 
 
-        /* ------------------------------------------
-           CONNECTED WALLET CHECK
-        ------------------------------------------ */
-
-        let connectedWalletAddress = "";
-
-
-        /*
-           First try the current TON Connect wallet.
-        */
-
-        if (
-            tonConnectUI &&
-            tonConnectUI.wallet &&
-            tonConnectUI.wallet.account &&
-            tonConnectUI.wallet.account.address
-        ) {
-
-            connectedWalletAddress =
-                normalizeAddress(
-                    tonConnectUI.wallet.account.address
-                );
-
-        }
-
-
-        /*
-           If TON Connect object is not immediately
-           available, use the stored connected wallet.
-        */
-
-        if (!connectedWalletAddress) {
-
-            connectedWalletAddress =
-                loadConnectedWallet();
-
-        }
-
-
         /*
            IMPORTANT:
-           If a wallet is connected, the manually
-           entered address MUST match it.
+           If a wallet is connected,
+           DIRECT CONNECTION HAS PRIORITY.
         */
 
-        if (connectedWalletAddress) {
+        const connectedWallet =
+            getCurrentConnectedWallet();
+
+
+        if (connectedWallet) {
+
+            /*
+               User typed a different address.
+               Do NOT allow it to override
+               the connected wallet.
+            */
 
             if (
                 manualAddress !==
-                connectedWalletAddress
+                connectedWallet
             ) {
 
                 addressInput.classList.add(
                     "mismatch"
                 );
 
+                /*
+                   Restore the connected address
+                   immediately.
+                */
+
+                addressInput.value =
+                    connectedWallet;
+
+
                 setStatus(
-                    "❌ WALLET ADDRESS MISMATCH — The address you entered does not match the connected wallet.",
+                    "Connected wallet has priority. The manually entered address was replaced.",
                     "error"
                 );
-
-                addressInput.focus();
 
                 return;
 
             }
 
+
+            /*
+               Same address — accept it.
+            */
+
+            saveAddress(
+                connectedWallet
+            );
+
+            setStatus(
+                "Connected wallet confirmed.",
+                "success"
+            );
+
+
+            confirmBtn.disabled =
+                true;
+
+            setTimeout(
+                function () {
+
+                    returnToBot(
+                        connectedWallet
+                    );
+
+                },
+                300
+            );
+
+            return;
+
         }
 
 
-        /* ------------------------------------------
-           ACCEPT
-        ------------------------------------------ */
+        /*
+           No connected wallet:
+           manual address is allowed.
+        */
 
         saveAddress(
             manualAddress
@@ -1174,7 +1259,7 @@ addressInput.addEventListener(
 
 
 /* ==========================================================
-   CLEAR MISMATCH ERROR WHEN USER EDITS
+   INPUT CHANGE
 ========================================================== */
 
 addressInput.addEventListener(
@@ -1184,6 +1269,11 @@ addressInput.addEventListener(
         addressInput.classList.remove(
             "mismatch"
         );
+
+        /*
+           Do not immediately block typing.
+           The priority check happens on CONFIRM.
+        */
 
         if (
             statusBox.classList.contains(
@@ -1203,11 +1293,8 @@ addressInput.addEventListener(
 
 
 /* ==========================================================
-   TON CONNECT
+   INITIAL TON CONNECT
 ========================================================== */
-
-let tonConnectUI = null;
-
 
 try {
 
@@ -1223,9 +1310,9 @@ try {
         });
 
 
-    /*
-       Wallet status listener.
-    */
+    /* ----------------------------------------------
+       TON CONNECT STATUS
+    ---------------------------------------------- */
 
     tonConnectUI.onStatusChange(
         function (wallet) {
@@ -1233,13 +1320,11 @@ try {
             if (!wallet) {
 
                 /*
-                   Do not immediately delete the saved
-                   address. The user may simply have
-                   reopened the page.
+                   Do not erase the saved address.
+                   If the wallet reconnects later,
+                   the current connection will regain
+                   priority.
                 */
-
-                connectedBox.style.display =
-                    "none";
 
                 return;
 
@@ -1255,41 +1340,23 @@ try {
                     : "";
 
 
-            if (!address) {
+            if (
+                !address ||
+                !isValidTonAddress(address)
+            ) {
+
                 return;
+
             }
 
 
             /*
-               Save the currently connected wallet.
+               DIRECT WALLET CONNECTION
+               HAS ABSOLUTE PRIORITY.
             */
 
-            saveConnectedWallet(
+            applyConnectedWalletPriority(
                 address
-            );
-
-
-            /*
-               Keep the same wallet address in
-               the manual field as well.
-            */
-
-            saveAddress(
-                address
-            );
-
-            addressInput.value =
-                address;
-
-
-            showConnectedWallet(
-                address
-            );
-
-
-            setStatus(
-                "Wallet connected successfully.",
-                "success"
             );
 
         }
@@ -1297,41 +1364,55 @@ try {
 
 
     /*
-       Restore an already connected wallet
-       when the page is opened again.
+       Try to restore an already connected wallet.
     */
 
-    if (
-        tonConnectUI.wallet &&
-        tonConnectUI.wallet.account &&
-        tonConnectUI.wallet.account.address
-    ) {
+    setTimeout(
+        function () {
 
-        const restoredAddress =
-            normalizeAddress(
-                tonConnectUI.wallet.account.address
-            );
+            const liveWallet =
+                getCurrentConnectedWallet();
 
-        if (restoredAddress) {
+            if (
+                liveWallet &&
+                isValidTonAddress(
+                    liveWallet
+                )
+            ) {
 
-            saveConnectedWallet(
-                restoredAddress
-            );
+                applyConnectedWalletPriority(
+                    liveWallet
+                );
 
-            saveAddress(
-                restoredAddress
-            );
+            }
 
-            addressInput.value =
-                restoredAddress;
+            else {
 
-            showConnectedWallet(
-                restoredAddress
-            );
+                /*
+                   No direct connection.
+                   Restore manual address if available.
+                */
 
-        }
+                const savedAddress =
+                    loadSavedAddress();
 
-    }
+                if (
+                    savedAddress &&
+                    isValidTonAddress(
+                        savedAddress
+                    )
+                ) {
+
+                    addressInput.value =
+                        savedAddress;
+
+                }
+
+            }
+
+        },
+        700
+    );
 
 }
 catch (error) {
@@ -1341,10 +1422,21 @@ catch (error) {
         error
     );
 
-    setStatus(
-        "TON Connect could not be initialized.",
-        "error"
-    );
+    /*
+       Manual wallet entry still remains available.
+    */
+
+    const savedAddress =
+        loadSavedAddress();
+
+    if (
+        savedAddress
+    ) {
+
+        addressInput.value =
+            savedAddress;
+
+    }
 
 }
 
@@ -1357,12 +1449,12 @@ useConnectedWallet.addEventListener(
     "click",
     function () {
 
+        /*
+           Always use the live connected wallet first.
+        */
+
         let address = "";
 
-
-        /*
-           Get the live connected wallet first.
-        */
 
         if (
             tonConnectUI &&
@@ -1391,7 +1483,10 @@ useConnectedWallet.addEventListener(
         }
 
 
-        if (!address) {
+        if (
+            !address ||
+            !isValidTonAddress(address)
+        ) {
 
             setStatus(
                 "Wallet address was not detected.",
@@ -1403,28 +1498,12 @@ useConnectedWallet.addEventListener(
         }
 
 
-        if (!isValidTonAddress(address)) {
-
-            setStatus(
-                "The connected wallet address is invalid.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
         /*
-           Put the connected address into the
-           manual field as well.
+           Direct connection has priority.
+           Save and display this address.
         */
 
-        addressInput.value =
-            address;
-
-
-        saveAddress(
+        applyConnectedWalletPriority(
             address
         );
 
@@ -1443,7 +1522,7 @@ useConnectedWallet.addEventListener(
                 );
 
             },
-            250
+            300
         );
 
     }
@@ -1451,36 +1530,58 @@ useConnectedWallet.addEventListener(
 
 
 /* ==========================================================
-   INITIAL LOAD
+   INITIAL PAGE LOAD
 ========================================================== */
 
-loadSavedAddress();
+(function initializePage() {
+
+    /*
+       Show previously saved address immediately.
+       TON Connect may replace it shortly after
+       if a direct wallet connection is restored.
+    */
+
+    const savedAddress =
+        loadSavedAddress();
+
+    if (
+        savedAddress &&
+        isValidTonAddress(
+            savedAddress
+        )
+    ) {
+
+        addressInput.value =
+            savedAddress;
+
+    }
 
 
-/*
-   If a previously connected wallet exists,
-   show it immediately while TON Connect restores
-   the actual connection.
-*/
+    /*
+       If there is a previously connected wallet,
+       it has priority over manual data.
+    */
 
-const previouslyConnected =
-    loadConnectedWallet();
+    const savedConnected =
+        loadConnectedWallet();
 
-if (
-    previouslyConnected &&
-    isValidTonAddress(
-        previouslyConnected
-    )
-) {
+    if (
+        savedConnected &&
+        isValidTonAddress(
+            savedConnected
+        )
+    ) {
 
-    addressInput.value =
-        previouslyConnected;
+        addressInput.value =
+            savedConnected;
 
-    showConnectedWallet(
-        previouslyConnected
-    );
+        showConnectedWallet(
+            savedConnected
+        );
 
-}
+    }
+
+})();
 
 </script>
 
