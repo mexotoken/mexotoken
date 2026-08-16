@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEXO Wallet Test</title>
+
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111111;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .box {
+            width: 90%;
+            max-width: 420px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 20px;
+            background: #1d1d1d;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #bbbbbb;
+            line-height: 1.6;
+        }
+
+        #ton-connect {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #status {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #292929;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>💎 MEXO</h1>
+
+    <p>
+        TON Wallet Connection Test
+    </p>
+
+    <div id="ton-connect"></div>
+
+    <div id="status">
+        🔌 Wallet not connected
+    </div>
+
+</div>
+
+<script>
+
+    const manifestUrl =
+        "https://mexotoken.github.io/mexotoken/ton-connect-test/tonconnect-manifest.json";
+
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+
+        manifestUrl: manifestUrl,
+
+        buttonRootId: "ton-connect"
+
+    });
+
+
+    tonConnectUI.onStatusChange(function(wallet) {
+
+        const status = document.getElementById("status");
+
+        if (wallet) {
+
+            status.innerHTML =
+                "✅ WALLET CONNECTED<br><br>" +
+                "Address:<br>" +
+                wallet.account.address;
+
+        } else {
+
+            status.innerHTML =
+                "🔌 Wallet not connected";
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
