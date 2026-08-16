@@ -49,10 +49,6 @@ body {
         inset 0 0 35px rgba(255,190,0,.015);
 }
 
-/* =========================
-   HEADER
-========================= */
-
 .logo-wrap {
     text-align: center;
 }
@@ -90,10 +86,6 @@ body {
     font-size: 17px;
     line-height: 1.55;
 }
-
-/* =========================
-   SECURITY
-========================= */
 
 .security {
     margin: 13px 0 14px;
@@ -135,10 +127,6 @@ body {
     line-height: 1.35;
 }
 
-/* =========================
-   CONNECT CARD
-========================= */
-
 .card {
     background: #1d1d1d;
     border: 1px solid rgba(255,255,255,.055);
@@ -175,10 +163,6 @@ body {
     font-size: 16px !important;
 }
 
-/* =========================
-   OR
-========================= */
-
 .or {
     display: flex;
     align-items: center;
@@ -196,10 +180,6 @@ body {
     flex: 1;
     background: #303035;
 }
-
-/* =========================
-   MANUAL ADDRESS
-========================= */
 
 .manual-card {
     background: #1d1d1d;
@@ -264,25 +244,16 @@ body {
     font-size: 13px;
     font-weight: 900;
     cursor: pointer;
-    transition: transform .15s ease, filter .15s ease;
 }
 
 .confirm-btn:active {
     transform: scale(.97);
 }
 
-.confirm-btn:hover {
-    filter: brightness(1.06);
-}
-
 .confirm-btn:disabled {
     opacity: .6;
     cursor: default;
 }
-
-/* =========================
-   STATUS
-========================= */
 
 .status {
     min-height: 18px;
@@ -303,10 +274,6 @@ body {
 .status.loading {
     color: #e5c94b;
 }
-
-/* =========================
-   CONNECTED STATE
-========================= */
 
 .connected-box {
     display: none;
@@ -344,10 +311,6 @@ body {
     cursor: pointer;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
 .footer {
     margin-top: auto;
     padding-top: 10px;
@@ -355,10 +318,6 @@ body {
     color: #66666b;
     font-size: 12px;
 }
-
-/* =========================
-   SMALL SCREENS
-========================= */
 
 @media (max-height: 700px) {
 
@@ -465,7 +424,6 @@ body {
 
 <div class="app">
 
-    <!-- HEADER -->
     <header class="logo-wrap">
 
         <img
@@ -500,7 +458,6 @@ body {
     </header>
 
 
-    <!-- DIRECT CONNECT -->
     <section class="card">
 
         <div class="card-title">
@@ -536,13 +493,11 @@ body {
     </section>
 
 
-    <!-- OR -->
     <div class="or">
         OR
     </div>
 
 
-    <!-- MANUAL ADDRESS -->
     <section class="manual-card">
 
         <div class="manual-title">
@@ -588,25 +543,18 @@ body {
 
 <script>
 
-/* ==========================================================
-   MEXO CONFIG
-========================================================== */
-
 const BOT_USERNAME = "mexoairdrop_bot";
 
 const MANIFEST_URL =
     "https://mexotoken.github.io/mexotoken/ton-connect-test/tonconnect-manifest.json";
 
 
-/* ==========================================================
-   TELEGRAM
-========================================================== */
-
 const tg =
     window.Telegram &&
     window.Telegram.WebApp
         ? window.Telegram.WebApp
         : null;
+
 
 if (tg) {
 
@@ -615,10 +563,6 @@ if (tg) {
 
 }
 
-
-/* ==========================================================
-   ELEMENTS
-========================================================== */
 
 const addressInput =
     document.getElementById("walletAddress");
@@ -639,10 +583,6 @@ const useConnectedWallet =
     document.getElementById("useConnectedWallet");
 
 
-/* ==========================================================
-   STORAGE
-========================================================== */
-
 const STORAGE_KEY =
     "mexo_wallet_address";
 
@@ -650,16 +590,8 @@ const CONNECTED_STORAGE_KEY =
     "mexo_connected_wallet_address";
 
 
-/* ==========================================================
-   TON CONNECT OBJECT
-========================================================== */
-
 let tonConnectUI = null;
 
-
-/* ==========================================================
-   STATUS
-========================================================== */
 
 function setStatus(message, type) {
 
@@ -672,10 +604,6 @@ function setStatus(message, type) {
 }
 
 
-/* ==========================================================
-   NORMALIZE ADDRESS
-========================================================== */
-
 function normalizeAddress(address) {
 
     return String(
@@ -684,10 +612,6 @@ function normalizeAddress(address) {
 
 }
 
-
-/* ==========================================================
-   TON ADDRESS VALIDATION
-========================================================== */
 
 function isValidTonAddress(address) {
 
@@ -714,10 +638,6 @@ function isValidTonAddress(address) {
 
 }
 
-
-/* ==========================================================
-   SAVE SELECTED ADDRESS
-========================================================== */
 
 function saveAddress(address) {
 
@@ -748,49 +668,6 @@ function saveAddress(address) {
 }
 
 
-/* ==========================================================
-   LOAD SELECTED ADDRESS
-========================================================== */
-
-function loadSavedAddress() {
-
-    try {
-
-        const address =
-            normalizeAddress(
-                localStorage.getItem(
-                    STORAGE_KEY
-                )
-            );
-
-        if (
-            address &&
-            isValidTonAddress(address)
-        ) {
-
-            return address;
-
-        }
-
-    }
-    catch (error) {
-
-        console.warn(
-            "Could not load saved wallet:",
-            error
-        );
-
-    }
-
-    return "";
-
-}
-
-
-/* ==========================================================
-   SAVE CONNECTED WALLET
-========================================================== */
-
 function saveConnectedWallet(address) {
 
     address =
@@ -820,9 +697,25 @@ function saveConnectedWallet(address) {
 }
 
 
-/* ==========================================================
-   LOAD CONNECTED WALLET
-========================================================== */
+function loadSavedAddress() {
+
+    try {
+
+        return normalizeAddress(
+            localStorage.getItem(
+                STORAGE_KEY
+            )
+        );
+
+    }
+    catch (error) {
+
+        return "";
+
+    }
+
+}
+
 
 function loadConnectedWallet() {
 
@@ -843,10 +736,6 @@ function loadConnectedWallet() {
 
 }
 
-
-/* ==========================================================
-   SHOW CONNECTED WALLET
-========================================================== */
 
 function showConnectedWallet(address) {
 
@@ -873,15 +762,7 @@ function showConnectedWallet(address) {
 }
 
 
-/* ==========================================================
-   GET CURRENT CONNECTED WALLET
-========================================================== */
-
 function getCurrentConnectedWallet() {
-
-    /*
-       The live TON Connect wallet has absolute priority.
-    */
 
     if (
         tonConnectUI &&
@@ -907,11 +788,6 @@ function getCurrentConnectedWallet() {
     }
 
 
-    /*
-       If TON Connect has not restored yet,
-       use the previously connected wallet.
-    */
-
     const savedConnected =
         loadConnectedWallet();
 
@@ -932,11 +808,25 @@ function getCurrentConnectedWallet() {
 }
 
 
-/* ==========================================================
-   APPLY CONNECTED WALLET PRIORITY
-========================================================== */
+/*
+==========================================================
+RETURN TO BOT
+==========================================================
 
-function applyConnectedWalletPriority(address) {
+IMPORTANT:
+
+We deliberately DO NOT use tg.sendData() here.
+
+The Web App is opened from an Inline Keyboard.
+Therefore we return using the bot deep-link:
+
+https://t.me/mexoairdrop_bot?start=wallet_ADDRESS
+
+The bot will process this through /start.
+==========================================================
+*/
+
+function returnToBot(address) {
 
     address =
         normalizeAddress(address);
@@ -946,82 +836,59 @@ function applyConnectedWalletPriority(address) {
         !isValidTonAddress(address)
     ) {
 
+        setStatus(
+            "Invalid TON wallet address.",
+            "error"
+        );
+
         return;
 
     }
 
 
-    /*
-       DIRECT CONNECTION ALWAYS WINS.
-       Any manually stored address is replaced.
-    */
+    saveAddress(
+        address
+    );
 
     saveConnectedWallet(
         address
     );
 
-    saveAddress(
-        address
-    );
-
-    addressInput.value =
-        address;
-
-    showConnectedWallet(
-        address
-    );
-
 
     setStatus(
-        "Connected wallet selected.",
+        "Wallet confirmed. Returning to Telegram...",
         "success"
     );
 
-}
+
+    const payload =
+        "wallet_" +
+        address;
 
 
-/* ==========================================================
-   RETURN TO TELEGRAM
-========================================================== */
-
-function returnToBot(address) {
-
-    address =
-        normalizeAddress(address);
-
-    if (!address) {
-        return;
-    }
+    const botUrl =
+        "https://t.me/" +
+        BOT_USERNAME +
+        "?start=" +
+        encodeURIComponent(
+            payload
+        );
 
 
-    saveAddress(
-        address
-    );
-
+    /*
+       Use Telegram's native method when available.
+    */
 
     if (
         tg &&
-        typeof tg.sendData === "function"
+        typeof tg.openTelegramLink === "function"
     ) {
 
         try {
 
-            tg.sendData(
-                JSON.stringify({
-
-                    type: "mexo_wallet",
-
-                    address: address
-
-                })
+            tg.openTelegramLink(
+                botUrl
             );
-
-
-            setStatus(
-                "Wallet address confirmed. Returning to Telegram...",
-                "success"
-            );
-
 
             setTimeout(
                 function () {
@@ -1038,14 +905,13 @@ function returnToBot(address) {
                 500
             );
 
-
             return;
 
         }
         catch (error) {
 
             console.error(
-                "Telegram sendData error:",
+                "openTelegramLink error:",
                 error
             );
 
@@ -1054,23 +920,79 @@ function returnToBot(address) {
     }
 
 
-    const encodedAddress =
-        encodeURIComponent(
-            address
-        );
+    /*
+       Browser fallback.
+    */
 
     window.location.href =
-        "https://t.me/" +
-        BOT_USERNAME +
-        "?start=wallet_" +
-        encodedAddress;
+        botUrl;
 
 }
 
 
-/* ==========================================================
-   MANUAL CONFIRM
-========================================================== */
+function confirmWallet(address) {
+
+    address =
+        normalizeAddress(address);
+
+
+    if (!address) {
+
+        setStatus(
+            "Please enter your TON wallet address.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !isValidTonAddress(address)
+    ) {
+
+        setStatus(
+            "Invalid TON wallet address.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    saveAddress(
+        address
+    );
+
+
+    confirmBtn.disabled =
+        true;
+
+    confirmBtn.style.opacity =
+        "0.65";
+
+
+    setStatus(
+        "Wallet confirmed. Returning to Telegram...",
+        "loading"
+    );
+
+
+    setTimeout(
+        function () {
+
+            returnToBot(
+                address
+            );
+
+        },
+        250
+    );
+
+}
+
 
 confirmBtn.addEventListener(
     "click",
@@ -1082,81 +1004,27 @@ confirmBtn.addEventListener(
             );
 
 
-        addressInput.classList.remove(
-            "mismatch"
-        );
-
-
-        if (!manualAddress) {
-
-            setStatus(
-                "Please enter your TON wallet address.",
-                "error"
-            );
-
-            addressInput.focus();
-
-            return;
-
-        }
-
-
-        if (
-            !isValidTonAddress(
-                manualAddress
-            )
-        ) {
-
-            setStatus(
-                "Invalid TON wallet address.",
-                "error"
-            );
-
-            addressInput.focus();
-
-            return;
-
-        }
-
-
-        /*
-           IMPORTANT:
-           If a wallet is connected,
-           DIRECT CONNECTION HAS PRIORITY.
-        */
-
         const connectedWallet =
             getCurrentConnectedWallet();
 
 
+        /*
+           If a wallet is connected,
+           it always has priority.
+        */
+
         if (connectedWallet) {
 
-            /*
-               User typed a different address.
-               Do NOT allow it to override
-               the connected wallet.
-            */
-
             if (
-                manualAddress !==
-                connectedWallet
+                manualAddress &&
+                manualAddress !== connectedWallet
             ) {
-
-                addressInput.classList.add(
-                    "mismatch"
-                );
-
-                /*
-                   Restore the connected address
-                   immediately.
-                */
 
                 addressInput.value =
                     connectedWallet;
 
-
                 setStatus(
-                    "Connected wallet has priority. The manually entered address was replaced.",
+                    "Connected wallet has priority. The connected wallet was selected.",
                     "error"
                 );
 
@@ -1165,32 +1033,8 @@ confirmBtn.addEventListener(
             }
 
 
-            /*
-               Same address — accept it.
-            */
-
-            saveAddress(
+            confirmWallet(
                 connectedWallet
-            );
-
-            setStatus(
-                "Connected wallet confirmed.",
-                "success"
-            );
-
-
-            confirmBtn.disabled =
-                true;
-
-            setTimeout(
-                function () {
-
-                    returnToBot(
-                        connectedWallet
-                    );
-
-                },
-                300
             );
 
             return;
@@ -1198,47 +1042,13 @@ confirmBtn.addEventListener(
         }
 
 
-        /*
-           No connected wallet:
-           manual address is allowed.
-        */
-
-        saveAddress(
+        confirmWallet(
             manualAddress
-        );
-
-
-        setStatus(
-            "Address confirmed. Returning to Telegram...",
-            "loading"
-        );
-
-
-        confirmBtn.disabled =
-            true;
-
-        confirmBtn.style.opacity =
-            "0.65";
-
-
-        setTimeout(
-            function () {
-
-                returnToBot(
-                    manualAddress
-                );
-
-            },
-            250
         );
 
     }
 );
 
-
-/* ==========================================================
-   ENTER KEY
-========================================================== */
 
 addressInput.addEventListener(
     "keydown",
@@ -1258,22 +1068,9 @@ addressInput.addEventListener(
 );
 
 
-/* ==========================================================
-   INPUT CHANGE
-========================================================== */
-
 addressInput.addEventListener(
     "input",
     function () {
-
-        addressInput.classList.remove(
-            "mismatch"
-        );
-
-        /*
-           Do not immediately block typing.
-           The priority check happens on CONFIRM.
-        */
 
         if (
             statusBox.classList.contains(
@@ -1292,9 +1089,11 @@ addressInput.addEventListener(
 );
 
 
-/* ==========================================================
-   INITIAL TON CONNECT
-========================================================== */
+/*
+==========================================================
+TON CONNECT
+==========================================================
+*/
 
 try {
 
@@ -1310,21 +1109,10 @@ try {
         });
 
 
-    /* ----------------------------------------------
-       TON CONNECT STATUS
-    ---------------------------------------------- */
-
     tonConnectUI.onStatusChange(
         function (wallet) {
 
             if (!wallet) {
-
-                /*
-                   Do not erase the saved address.
-                   If the wallet reconnects later,
-                   the current connection will regain
-                   priority.
-                */
 
                 return;
 
@@ -1350,69 +1138,27 @@ try {
             }
 
 
-            /*
-               DIRECT WALLET CONNECTION
-               HAS ABSOLUTE PRIORITY.
-            */
-
-            applyConnectedWalletPriority(
+            saveConnectedWallet(
                 address
+            );
+
+            saveAddress(
+                address
+            );
+
+            showConnectedWallet(
+                address
+            );
+
+
+            setStatus(
+                "Connected wallet selected.",
+                "success"
             );
 
         }
     );
 
-
-    /*
-       Try to restore an already connected wallet.
-    */
-
-    setTimeout(
-        function () {
-
-            const liveWallet =
-                getCurrentConnectedWallet();
-
-            if (
-                liveWallet &&
-                isValidTonAddress(
-                    liveWallet
-                )
-            ) {
-
-                applyConnectedWalletPriority(
-                    liveWallet
-                );
-
-            }
-
-            else {
-
-                /*
-                   No direct connection.
-                   Restore manual address if available.
-                */
-
-                const savedAddress =
-                    loadSavedAddress();
-
-                if (
-                    savedAddress &&
-                    isValidTonAddress(
-                        savedAddress
-                    )
-                ) {
-
-                    addressInput.value =
-                        savedAddress;
-
-                }
-
-            }
-
-        },
-        700
-    );
 
 }
 catch (error) {
@@ -1422,65 +1168,15 @@ catch (error) {
         error
     );
 
-    /*
-       Manual wallet entry still remains available.
-    */
-
-    const savedAddress =
-        loadSavedAddress();
-
-    if (
-        savedAddress
-    ) {
-
-        addressInput.value =
-            savedAddress;
-
-    }
-
 }
 
-
-/* ==========================================================
-   USE CONNECTED WALLET
-========================================================== */
 
 useConnectedWallet.addEventListener(
     "click",
     function () {
 
-        /*
-           Always use the live connected wallet first.
-        */
-
-        let address = "";
-
-
-        if (
-            tonConnectUI &&
-            tonConnectUI.wallet &&
-            tonConnectUI.wallet.account &&
-            tonConnectUI.wallet.account.address
-        ) {
-
-            address =
-                normalizeAddress(
-                    tonConnectUI.wallet.account.address
-                );
-
-        }
-
-
-        /*
-           Fallback to saved connected wallet.
-        */
-
-        if (!address) {
-
-            address =
-                loadConnectedWallet();
-
-        }
+        const address =
+            getCurrentConnectedWallet();
 
 
         if (
@@ -1498,19 +1194,16 @@ useConnectedWallet.addEventListener(
         }
 
 
-        /*
-           Direct connection has priority.
-           Save and display this address.
-        */
+        confirmBtn.disabled =
+            true;
 
-        applyConnectedWalletPriority(
-            address
-        );
+        useConnectedWallet.disabled =
+            true;
 
 
         setStatus(
             "Wallet confirmed. Returning to Telegram...",
-            "success"
+            "loading"
         );
 
 
@@ -1522,27 +1215,44 @@ useConnectedWallet.addEventListener(
                 );
 
             },
-            300
+            250
         );
 
     }
 );
 
 
-/* ==========================================================
-   INITIAL PAGE LOAD
-========================================================== */
+/*
+==========================================================
+INITIAL LOAD
+==========================================================
+*/
 
 (function initializePage() {
 
-    /*
-       Show previously saved address immediately.
-       TON Connect may replace it shortly after
-       if a direct wallet connection is restored.
-    */
+    const savedConnected =
+        loadConnectedWallet();
+
+
+    if (
+        savedConnected &&
+        isValidTonAddress(
+            savedConnected
+        )
+    ) {
+
+        showConnectedWallet(
+            savedConnected
+        );
+
+        return;
+
+    }
+
 
     const savedAddress =
         loadSavedAddress();
+
 
     if (
         savedAddress &&
@@ -1556,34 +1266,9 @@ useConnectedWallet.addEventListener(
 
     }
 
-
-    /*
-       If there is a previously connected wallet,
-       it has priority over manual data.
-    */
-
-    const savedConnected =
-        loadConnectedWallet();
-
-    if (
-        savedConnected &&
-        isValidTonAddress(
-            savedConnected
-        )
-    ) {
-
-        addressInput.value =
-            savedConnected;
-
-        showConnectedWallet(
-            savedConnected
-        );
-
-    }
-
 })();
 
 </script>
 
 </body>
-</html>
+                </html>
