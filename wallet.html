@@ -15,7 +15,6 @@
 
 <script src="https://unpkg.com/@tonconnect/ui@2.3.0/dist/tonconnect-ui.min.js"></script>
 
-
 <style>
 
 * {
@@ -41,10 +40,8 @@ body {
 }
 
 .app {
-
     width: 100%;
     max-width: 640px;
-
     min-height: calc(100vh - 24px);
 
     background:
@@ -55,9 +52,7 @@ body {
         ),
         #151515;
 
-    border:
-        1px solid rgba(235,190,0,.55);
-
+    border: 1px solid rgba(235,190,0,.55);
     border-radius: 34px;
 
     padding: 24px 20px 18px;
@@ -80,7 +75,6 @@ body {
 }
 
 .logo {
-
     width: 58px;
     height: 58px;
 
@@ -88,15 +82,13 @@ body {
 
     display: block;
 
-    margin:
-        0 auto 5px;
+    margin: 0 auto 5px;
 
     mix-blend-mode: screen;
 }
 
 .brand {
-
-    font-size: 38px;
+    font-size: 34px;
 
     line-height: 1;
 
@@ -108,33 +100,15 @@ body {
 }
 
 .subtitle {
+    margin: 15px 0 0;
 
-    margin:
-        15px 0 0;
-
-    font-size: 25px;
+    font-size: 24px;
 
     font-weight: 800;
 
     color: #a7a7ad;
 
     letter-spacing: .3px;
-}
-
-.description {
-
-    margin:
-        12px auto 0;
-
-    max-width: 500px;
-
-    text-align: center;
-
-    color: #a8a8ad;
-
-    font-size: 17px;
-
-    line-height: 1.55;
 }
 
 
@@ -144,21 +118,21 @@ body {
 
 .security {
 
-    margin:
-        13px 0 14px;
+    margin: 13px 0 12px;
 
     border-radius: 16px;
 
-    padding:
-        11px 13px;
+    padding: 11px 13px;
 
     text-align: center;
 
-    border:
-        1px solid rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.10);
 
     animation:
-        securityLight 2s infinite ease-in-out;
+        securityLight
+        2s
+        infinite
+        ease-in-out;
 }
 
 @keyframes securityLight {
@@ -171,7 +145,8 @@ body {
             rgba(35,190,110,.32);
 
         box-shadow:
-            0 0 10px rgba(35,190,110,.05);
+            0 0 10px
+            rgba(35,190,110,.05);
     }
 
     50%, 95% {
@@ -182,7 +157,8 @@ body {
             rgba(255,80,80,.30);
 
         box-shadow:
-            0 0 13px rgba(255,70,70,.07);
+            0 0 13px
+            rgba(255,70,70,.07);
     }
 
     100% {
@@ -213,6 +189,22 @@ body {
 }
 
 
+.description {
+
+    margin: 10px auto 0;
+
+    max-width: 500px;
+
+    text-align: center;
+
+    color: #a8a8ad;
+
+    font-size: 15px;
+
+    line-height: 1.45;
+}
+
+
 /* =========================
    CONNECT CARD
 ========================= */
@@ -222,21 +214,21 @@ body {
     background: #1d1d1d;
 
     border:
-        1px solid rgba(255,255,255,.055);
+        1px solid
+        rgba(255,255,255,.055);
 
     border-radius: 23px;
 
-    padding:
-        17px 15px;
+    padding: 17px 15px;
 
-    margin-bottom: 12px;
+    margin-top: 12px;
 }
 
 .card-title {
 
     text-align: center;
 
-    font-size: 22px;
+    font-size: 21px;
 
     font-weight: 900;
 
@@ -249,7 +241,7 @@ body {
 
     color: #a4a4a9;
 
-    font-size: 14px;
+    font-size: 13px;
 
     line-height: 1.45;
 
@@ -278,196 +270,7 @@ body {
 
 
 /* =========================
-   OR
-========================= */
-
-.or {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    color: #77777d;
-
-    font-weight: 800;
-
-    font-size: 13px;
-
-    margin:
-        2px 0 12px;
-}
-
-.or::before,
-.or::after {
-
-    content: "";
-
-    height: 1px;
-
-    flex: 1;
-
-    background: #303035;
-}
-
-
-/* =========================
-   MANUAL ADDRESS
-========================= */
-
-.manual-card {
-
-    background: #1d1d1d;
-
-    border:
-        1px solid rgba(255,255,255,.055);
-
-    border-radius: 23px;
-
-    padding:
-        16px 14px;
-}
-
-.manual-title {
-
-    font-size: 20px;
-
-    font-weight: 900;
-
-    margin-bottom: 4px;
-}
-
-.manual-description {
-
-    color: #99999f;
-
-    font-size: 13px;
-
-    margin-bottom: 11px;
-}
-
-.address-row {
-
-    display: flex;
-
-    width: 100%;
-
-    gap: 8px;
-
-    align-items: stretch;
-}
-
-.address-input {
-
-    flex: 1;
-
-    min-width: 0;
-
-    height: 51px;
-
-    padding:
-        0 13px;
-
-    border-radius: 14px;
-
-    border:
-        1px solid #454549;
-
-    background: #090909;
-
-    color: #ffffff;
-
-    font-size: 13px;
-
-    outline: none;
-}
-
-.address-input::placeholder {
-
-    color: #707075;
-}
-
-.address-input:focus {
-
-    border-color: #e8bd00;
-
-    box-shadow:
-        0 0 0 2px rgba(232,189,0,.08);
-}
-
-.confirm-btn {
-
-    flex:
-        0 0 92px;
-
-    height: 51px;
-
-    border: none;
-
-    border-radius: 14px;
-
-    background: #f0c000;
-
-    color: #111111;
-
-    font-size: 13px;
-
-    font-weight: 900;
-
-    cursor: pointer;
-
-    transition:
-        transform .15s ease,
-        filter .15s ease;
-}
-
-.confirm-btn:active {
-
-    transform: scale(.97);
-}
-
-.confirm-btn:hover {
-
-    filter: brightness(1.06);
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-.status {
-
-    min-height: 18px;
-
-    margin-top: 8px;
-
-    text-align: center;
-
-    font-size: 12px;
-
-    line-height: 1.4;
-}
-
-.status.error {
-
-    color: #ff8585;
-}
-
-.status.success {
-
-    color: #7ee5ae;
-}
-
-.status.loading {
-
-    color: #e5c94b;
-}
-
-
-/* =========================
-   CONNECTED STATE
+   CONNECTED
 ========================= */
 
 .connected-box {
@@ -483,7 +286,8 @@ body {
     background: #0d261b;
 
     border:
-        1px solid rgba(40,200,120,.30);
+        1px solid
+        rgba(40,200,120,.30);
 
     text-align: center;
 }
@@ -533,6 +337,185 @@ body {
 
 
 /* =========================
+   OR
+========================= */
+
+.or {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #77777d;
+
+    font-weight: 800;
+
+    font-size: 13px;
+
+    margin: 12px 0;
+}
+
+.or::before,
+.or::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background: #303035;
+}
+
+
+/* =========================
+   MANUAL
+========================= */
+
+.manual-card {
+
+    background: #1d1d1d;
+
+    border:
+        1px solid
+        rgba(255,255,255,.055);
+
+    border-radius: 23px;
+
+    padding: 16px 14px;
+}
+
+.manual-title {
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    margin-bottom: 4px;
+}
+
+.manual-description {
+
+    color: #99999f;
+
+    font-size: 13px;
+
+    margin-bottom: 11px;
+}
+
+.address-row {
+
+    display: flex;
+
+    width: 100%;
+
+    gap: 8px;
+
+    align-items: stretch;
+}
+
+.address-input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: 51px;
+
+    padding: 0 13px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        #454549;
+
+    background: #090909;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.address-input::placeholder {
+
+    color: #707075;
+}
+
+.address-input:focus {
+
+    border-color: #e8bd00;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(232,189,0,.08);
+}
+
+.confirm-btn {
+
+    flex: 0 0 92px;
+
+    height: 51px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #f0c000;
+
+    color: #111111;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.confirm-btn:active {
+
+    transform: scale(.97);
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+
+    min-height: 18px;
+
+    margin-top: 8px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+.status.error {
+
+    color: #ff8585;
+}
+
+.status.success {
+
+    color: #7ee5ae;
+}
+
+.status.loading {
+
+    color: #e5c94b;
+}
+
+
+/* =========================
    FOOTER
 ========================= */
 
@@ -551,15 +534,14 @@ body {
 
 
 /* =========================
-   SMALL SCREENS
+   SMALL SCREEN
 ========================= */
 
 @media (max-height: 700px) {
 
     body {
 
-        padding:
-            7px 8px;
+        padding: 7px 8px;
     }
 
     .app {
@@ -568,7 +550,9 @@ body {
             calc(100vh - 14px);
 
         padding:
-            15px 15px 11px;
+            15px
+            15px
+            11px;
 
         border-radius: 27px;
     }
@@ -577,13 +561,11 @@ body {
 
         width: 45px;
         height: 45px;
-
-        margin-bottom: 2px;
     }
 
     .brand {
 
-        font-size: 31px;
+        font-size: 30px;
     }
 
     .subtitle {
@@ -597,16 +579,19 @@ body {
 
         margin-top: 7px;
 
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .security {
 
         margin:
-            8px 0 9px;
+            8px
+            0
+            9px;
 
         padding:
-            8px 10px;
+            8px
+            10px;
     }
 
     .security-title {
@@ -680,7 +665,8 @@ body {
         font-size: 11px;
 
         padding:
-            0 9px;
+            0
+            9px;
     }
 
     .confirm-btn {
@@ -689,7 +675,6 @@ body {
 
         font-size: 11px;
     }
-
 }
 
 </style>
@@ -699,16 +684,12 @@ body {
 
 <body>
 
-
 <div class="app">
 
 
-    <!-- ======================================
-         HEADER
-    ======================================= -->
+    <!-- HEADER -->
 
     <header class="logo-wrap">
-
 
         <img
             src="https://raw.githubusercontent.com/mexotoken/mexotoken/main/logo.png"
@@ -716,16 +697,16 @@ body {
             alt="MEXO Logo"
         >
 
-
         <h1 class="brand">
             MEXO
         </h1>
-
 
         <div class="subtitle">
             ADD YOUR TON WALLET
         </div>
 
+
+        <!-- SECURITY -->
 
         <div class="security">
 
@@ -734,44 +715,32 @@ body {
             </div>
 
             <div class="security-text">
-
                 Your TON wallet address is all we need.
                 No seed phrase, private key or transaction approval.
-
             </div>
 
         </div>
 
 
         <div class="description">
-
             Choose how you want to receive your MEXO airdrop.
-
         </div>
-
 
     </header>
 
 
-    <!-- ======================================
-         TON CONNECT
-    ======================================= -->
+    <!-- CONNECT -->
 
     <section class="card">
-
 
         <div class="card-title">
             🔗 Connect Wallet
         </div>
 
-
         <div class="card-description">
-
             Connect your supported TON wallet.<br>
             No transaction is requested.
-
         </div>
-
 
         <div id="ton-connect"></div>
 
@@ -785,56 +754,44 @@ body {
                 ✅ TON WALLET CONNECTED
             </div>
 
-
             <div
-                class="connected-address"
                 id="connectedAddress"
-            ></div>
-
+                class="connected-address">
+            </div>
 
             <button
-                class="use-wallet"
                 id="useConnectedWallet"
+                class="use-wallet"
             >
                 USE THIS WALLET
             </button>
 
         </div>
 
-
     </section>
 
 
-    <!-- ======================================
-         OR
-    ======================================= -->
+    <!-- OR -->
 
     <div class="or">
         OR
     </div>
 
 
-    <!-- ======================================
-         MANUAL ADDRESS
-    ======================================= -->
+    <!-- MANUAL -->
 
     <section class="manual-card">
-
 
         <div class="manual-title">
             ✏️ Enter TON Address
         </div>
 
-
         <div class="manual-description">
-
             Prefer to enter your wallet address manually.
-
         </div>
 
 
         <div class="address-row">
-
 
             <input
                 id="walletAddress"
@@ -855,25 +812,20 @@ body {
                 CONFIRM
             </button>
 
-
         </div>
 
 
         <div
             id="status"
-            class="status"
-        ></div>
-
+            class="status">
+        </div>
 
     </section>
 
 
     <footer class="footer">
-
         MEXO • TON Wallet
-
     </footer>
-
 
 </div>
 
@@ -881,15 +833,11 @@ body {
 <script>
 
 /* ==========================================================
-   MEXO CONFIG
+   MEXO
 ========================================================== */
 
 const BOT_USERNAME =
     "mexoairdrop_bot";
-
-
-const MANIFEST_URL =
-    "https://mexotoken.github.io/mexotoken/ton-connect-test/tonconnect-manifest.json";
 
 
 /* ==========================================================
@@ -902,12 +850,12 @@ const urlParams =
     );
 
 
-const sessionId =
+const withdrawalSession =
     urlParams.get("sid") || "";
 
 
 /* ==========================================================
-   TELEGRAM WEB APP
+   TELEGRAM
 ========================================================== */
 
 const tg =
@@ -971,12 +919,12 @@ const useConnectedWallet =
 ========================================================== */
 
 function setStatus(
-    message,
+    text,
     type
 ) {
 
     statusBox.textContent =
-        message;
+        text;
 
     statusBox.className =
         "status " +
@@ -998,8 +946,7 @@ function isValidTonAddress(
 
 
     /*
-       Friendly TON address:
-       EQ... / UQ...
+       User-friendly TON address
     */
 
     if (
@@ -1014,8 +961,7 @@ function isValidTonAddress(
 
 
     /*
-       Raw TON address:
-       0: + 64 hexadecimal chars
+       Raw TON address
     */
 
     if (
@@ -1035,10 +981,10 @@ function isValidTonAddress(
 
 
 /* ==========================================================
-   RETURN TO BOT
+   RETURN DATA
 ========================================================== */
 
-function returnToBot(
+function sendWalletToTelegram(
     address
 ) {
 
@@ -1046,104 +992,110 @@ function returnToBot(
         address.trim();
 
 
-    if (!sessionId) {
-
-        setStatus(
-            "❌ Invalid withdrawal session.",
-            "error"
-        );
+    if (!address) {
 
         return;
 
     }
 
+
+    /*
+       Keep the withdrawal session.
+    */
+
+    const payload = {
+
+        type:
+            "mexo_wallet",
+
+        sid:
+            withdrawalSession,
+
+        address:
+            address
+
+    };
+
+
+    /* ======================================================
+       TELEGRAM WEB APP
+    ====================================================== */
 
     if (
-        !isValidTonAddress(
-            address
-        )
+        tg &&
+        typeof tg.sendData === "function"
     ) {
 
-        setStatus(
-            "❌ Invalid TON wallet address.",
-            "error"
-        );
+        try {
 
-        return;
+            tg.sendData(
+                JSON.stringify(
+                    payload
+                )
+            );
+
+
+            setStatus(
+                "Wallet confirmed. Returning to Telegram...",
+                "success"
+            );
+
+
+            setTimeout(
+                function () {
+
+                    if (
+                        tg &&
+                        typeof tg.close === "function"
+                    ) {
+
+                        tg.close();
+
+                    }
+
+                },
+                600
+            );
+
+
+            return;
+
+        }
+        catch (error) {
+
+            console.error(
+                "Telegram sendData error:",
+                error
+            );
+
+        }
 
     }
 
 
-    /*
-       The wallet address is returned through
-       the Telegram start parameter.
+    /* ======================================================
+       FALLBACK
+    ====================================================== */
 
-       Format:
-
-       w_SESSIONID_WALLETADDRESS
-    */
-
-    const startParameter =
-        "w_"
-        +
-        sessionId
-        +
-        "_"
-        +
-        address;
-
-
-    const telegramUrl =
-        "https://t.me/"
-        +
-        BOT_USERNAME
-        +
-        "?start="
-        +
+    const encodedAddress =
         encodeURIComponent(
-            startParameter
+            address
         );
 
 
-    confirmBtn.disabled =
-        true;
+    const encodedSid =
+        encodeURIComponent(
+            withdrawalSession
+        );
 
 
-    if (useConnectedWallet) {
-
-        useConnectedWallet.disabled =
-            true;
-
-    }
-
-
-    addressInput.disabled =
-        true;
-
-
-    setStatus(
-        "✅ Wallet confirmed. Returning to MEXO...",
-        "success"
-    );
-
-
-    /*
-       Open Telegram bot.
-
-       We intentionally use the Telegram URL
-       rather than sendData because this page
-       may also be opened in a normal browser.
-    */
-
-    setTimeout(
-        function () {
-
-            window.location.href =
-                telegramUrl;
-
-        },
-        350
-    );
+    window.location.href =
+        "https://t.me/" +
+        BOT_USERNAME +
+        "?start=wallet_" +
+        encodedSid +
+        "_" +
+        encodedAddress;
 
 }
 
@@ -1192,8 +1144,29 @@ confirmBtn.addEventListener(
         }
 
 
-        returnToBot(
-            address
+        confirmBtn.disabled =
+            true;
+
+
+        confirmBtn.style.opacity =
+            "0.6";
+
+
+        setStatus(
+            "Confirming wallet...",
+            "loading"
+        );
+
+
+        setTimeout(
+            function () {
+
+                sendWalletToTelegram(
+                    address
+                );
+
+            },
+            250
         );
 
     }
@@ -1226,7 +1199,14 @@ addressInput.addEventListener(
    TON CONNECT
 ========================================================== */
 
-let tonConnectUI = null;
+const MANIFEST_URL =
+    "https://mexotoken.github.io/"
+    + "mexotoken/ton-connect-test/"
+    + "tonconnect-manifest.json";
+
+
+let tonConnectUI =
+    null;
 
 
 try {
@@ -1243,13 +1223,8 @@ try {
         });
 
 
-    /*
-       Listen for wallet connection.
-    */
-
     tonConnectUI.onStatusChange(
         function (wallet) {
-
 
             if (!wallet) {
 
@@ -1317,7 +1292,6 @@ useConnectedWallet.addEventListener(
     "click",
     function () {
 
-
         if (
             !tonConnectUI ||
             !tonConnectUI.wallet
@@ -1333,10 +1307,14 @@ useConnectedWallet.addEventListener(
         }
 
 
+        const wallet =
+            tonConnectUI.wallet;
+
+
         const address =
-            tonConnectUI.wallet.account &&
-            tonConnectUI.wallet.account.address
-                ? tonConnectUI.wallet.account.address
+            wallet.account &&
+            wallet.account.address
+                ? wallet.account.address
                 : "";
 
 
@@ -1352,28 +1330,35 @@ useConnectedWallet.addEventListener(
         }
 
 
-        returnToBot(
-            address
+        useConnectedWallet.disabled =
+            true;
+
+
+        useConnectedWallet.style.opacity =
+            "0.6";
+
+
+        setStatus(
+            "Confirming wallet...",
+            "loading"
+        );
+
+
+        setTimeout(
+            function () {
+
+                sendWalletToTelegram(
+                    address
+                );
+
+            },
+            250
         );
 
     }
 );
 
-
-/* ==========================================================
-   SESSION WARNING
-========================================================== */
-
-if (!sessionId) {
-
-    setStatus(
-        "⚠️ Please open this wallet page from the MEXO bot.",
-        "error"
-    );
-
-}
-
 </script>
 
 </body>
-  </html>
+</html>
