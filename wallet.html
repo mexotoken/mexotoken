@@ -1,27 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>MEXO • TON Wallet</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <script src="https://unpkg.com/@tonconnect/ui@2.3.0/dist/tonconnect-ui.min.js"></script>
 
-
 <style>
-
-/* ==========================================================
-   GLOBAL RESET
-========================================================== */
-
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -31,985 +19,454 @@ html,
 body {
     margin: 0;
     padding: 0;
-
-    width: 100%;
-    min-width: 0;
-
     min-height: 100%;
-
     background: #090909;
-
+    font-family: Arial, Helvetica, sans-serif;
     color: #ffffff;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    overflow-x: hidden !important;
 }
-
-
-/* ==========================================================
-   BODY
-========================================================== */
 
 body {
-
     display: flex;
-
     justify-content: center;
-
     align-items: flex-start;
-
     padding: 12px 10px;
-
-    max-width: 100vw;
-
-    position: relative;
-
-    overflow-x: hidden !important;
 }
-
-
-/* ==========================================================
-   MAIN APP
-========================================================== */
 
 .app {
-
     width: 100%;
-
     max-width: 640px;
-
-    min-width: 0;
-
-    min-height:
-        calc(100vh - 24px);
-
+    min-height: calc(100vh - 24px);
     background:
-
-        radial-gradient(
-            circle at top,
-            rgba(255,196,0,.045),
-            transparent 35%
-        ),
-
+        radial-gradient(circle at top, rgba(255,196,0,.045), transparent 35%),
         #151515;
-
-    border:
-        1px solid
-        rgba(235,190,0,.55);
-
+    border: 1px solid rgba(235,190,0,.55);
     border-radius: 34px;
-
-    padding:
-        24px 20px 18px;
-
+    padding: 24px 20px 18px;
     display: flex;
-
     flex-direction: column;
-
     box-shadow:
-
-        0 0 35px
-        rgba(0,0,0,.65),
-
-        inset 0 0 35px
-        rgba(255,190,0,.015);
-
-    position: relative;
-
-    overflow: hidden !important;
-
-    isolation: isolate;
+        0 0 35px rgba(0,0,0,.65),
+        inset 0 0 35px rgba(255,190,0,.015);
 }
 
-
-/* ==========================================================
+/* =========================
    HEADER
-========================================================== */
+========================= */
 
 .logo-wrap {
-
-    width: 100%;
-
-    max-width: 100%;
-
     text-align: center;
-
-    overflow: hidden;
 }
-
 
 .logo {
-
     width: 58px;
-
     height: 58px;
-
     object-fit: contain;
-
     display: block;
-
-    margin:
-        0 auto 5px;
-
+    margin: 0 auto 5px;
     mix-blend-mode: screen;
-
-    max-width: 100%;
 }
-
 
 .brand {
-
     font-size: 38px;
-
     line-height: 1;
-
     font-weight: 900;
-
     letter-spacing: 1px;
-
     margin: 0;
-
-    max-width: 100%;
 }
-
 
 .subtitle {
-
-    margin:
-        15px 0 0;
-
+    margin: 15px 0 0;
     font-size: 25px;
-
     font-weight: 800;
-
     color: #a7a7ad;
-
     letter-spacing: .3px;
-
-    max-width: 100%;
-
-    overflow-wrap: anywhere;
 }
-
 
 .description {
-
-    margin:
-        12px auto 0;
-
+    margin: 12px auto 0;
     max-width: 500px;
-
-    width: 100%;
-
     text-align: center;
-
     color: #a8a8ad;
-
     font-size: 17px;
-
     line-height: 1.55;
-
-    overflow-wrap: anywhere;
 }
 
-
-/* ==========================================================
+/* =========================
    SECURITY
-========================================================== */
+========================= */
 
 .security {
-
-    margin:
-        13px 0 14px;
-
+    margin: 13px 0 14px;
     border-radius: 16px;
-
-    padding:
-        11px 13px;
-
+    padding: 11px 13px;
     text-align: center;
-
-    border:
-        1px solid
-        rgba(255,255,255,.10);
-
-    animation:
-        securityLight
-        2s infinite ease-in-out;
-
-    width: 100%;
-
-    max-width: 100%;
-
-    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.10);
+    animation: securityLight 2s infinite ease-in-out;
 }
 
-
 @keyframes securityLight {
-
-    0%,
-    45% {
-
+    0%, 45% {
         background: #0b2119;
-
-        border-color:
-            rgba(35,190,110,.32);
-
-        box-shadow:
-            0 0 10px
-            rgba(35,190,110,.05);
+        border-color: rgba(35,190,110,.32);
+        box-shadow: 0 0 10px rgba(35,190,110,.05);
     }
 
-    50%,
-    95% {
-
+    50%, 95% {
         background: #321919;
-
-        border-color:
-            rgba(255,80,80,.30);
-
-        box-shadow:
-            0 0 13px
-            rgba(255,70,70,.07);
+        border-color: rgba(255,80,80,.30);
+        box-shadow: 0 0 13px rgba(255,70,70,.07);
     }
 
     100% {
-
         background: #0b2119;
-
-        border-color:
-            rgba(35,190,110,.32);
+        border-color: rgba(35,190,110,.32);
     }
 }
 
-
 .security-title {
-
     font-size: 15px;
-
     font-weight: 800;
-
     margin-bottom: 3px;
 }
 
-
 .security-text {
-
     color: #c7c7ca;
-
     font-size: 12px;
-
     line-height: 1.35;
-
-    overflow-wrap: anywhere;
 }
 
-
-/* ==========================================================
+/* =========================
    CONNECT CARD
-========================================================== */
+========================= */
 
 .card {
-
-    width: 100%;
-
-    max-width: 100%;
-
-    min-width: 0;
-
     background: #1d1d1d;
-
-    border:
-        1px solid
-        rgba(255,255,255,.055);
-
+    border: 1px solid rgba(255,255,255,.055);
     border-radius: 23px;
-
-    padding:
-        17px 15px;
-
+    padding: 17px 15px;
     margin-bottom: 12px;
-
-    overflow: hidden;
-
-    position: relative;
 }
-
 
 .card-title {
-
     text-align: center;
-
     font-size: 22px;
-
     font-weight: 900;
-
     margin-bottom: 5px;
-
-    overflow-wrap: anywhere;
 }
-
 
 .card-description {
-
     text-align: center;
-
     color: #a4a4a9;
-
     font-size: 14px;
-
     line-height: 1.45;
-
     margin-bottom: 12px;
-
-    overflow-wrap: anywhere;
 }
-
-
-/* ==========================================================
-   TON CONNECT ROOT
-========================================================== */
 
 #ton-connect {
-
-    width: 100% !important;
-
-    max-width: 100% !important;
-
-    min-width: 0 !important;
-
+    width: 100%;
     display: flex;
-
     justify-content: center;
-
-    align-items: center;
-
-    overflow: hidden !important;
-
-    position: relative;
 }
-
-
-#ton-connect * {
-
-    max-width: 100%;
-
-    min-width: 0;
-
-    overflow-wrap: anywhere;
-}
-
 
 #ton-connect button {
-
     width: 100% !important;
-
-    max-width: 100% !important;
-
     min-height: 52px !important;
-
     border-radius: 15px !important;
-
     font-size: 16px !important;
 }
 
-
-/* ==========================================================
-   TON CONNECT INTERNAL ELEMENT PROTECTION
-========================================================== */
-
-[data-tc-root] {
-
-    max-width: 100% !important;
-
-    overflow: hidden !important;
-}
-
-
-[data-tc-root] * {
-
-    max-width: 100% !important;
-}
-
-
-/* ==========================================================
+/* =========================
    OR
-========================================================== */
+========================= */
 
 .or {
-
-    width: 100%;
-
-    max-width: 100%;
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
     color: #77777d;
-
     font-weight: 800;
-
     font-size: 13px;
-
-    margin:
-        2px 0 12px;
-
-    overflow: hidden;
+    margin: 2px 0 12px;
 }
-
 
 .or::before,
 .or::after {
-
     content: "";
-
     height: 1px;
-
     flex: 1;
-
-    min-width: 0;
-
     background: #303035;
 }
 
-
-/* ==========================================================
+/* =========================
    MANUAL ADDRESS
-========================================================== */
+========================= */
 
 .manual-card {
-
-    width: 100%;
-
-    max-width: 100%;
-
-    min-width: 0;
-
     background: #1d1d1d;
-
-    border:
-        1px solid
-        rgba(255,255,255,.055);
-
+    border: 1px solid rgba(255,255,255,.055);
     border-radius: 23px;
-
-    padding:
-        16px 14px;
-
-    overflow: hidden;
+    padding: 16px 14px;
 }
-
 
 .manual-title {
-
     font-size: 20px;
-
     font-weight: 900;
-
     margin-bottom: 4px;
-
-    overflow-wrap: anywhere;
 }
-
 
 .manual-description {
-
     color: #99999f;
-
     font-size: 13px;
-
     margin-bottom: 11px;
-
-    overflow-wrap: anywhere;
 }
 
-
-/* ==========================================================
-   ADDRESS ROW
-========================================================== */
-
 .address-row {
-
     display: flex;
-
     width: 100%;
-
-    max-width: 100%;
-
-    min-width: 0;
-
     gap: 8px;
-
     align-items: stretch;
 }
 
-
 .address-input {
-
-    flex:
-        1 1 auto;
-
+    flex: 1;
     min-width: 0;
-
-    width: 0;
-
     height: 51px;
-
-    padding:
-        0 13px;
-
+    padding: 0 13px;
     border-radius: 14px;
-
-    border:
-        1px solid
-        #454549;
-
+    border: 1px solid #454549;
     background: #090909;
-
     color: #ffffff;
-
     font-size: 13px;
-
     outline: none;
-
-    text-overflow: ellipsis;
 }
 
-
 .address-input::placeholder {
-
     color: #707075;
 }
 
-
 .address-input:focus {
-
     border-color: #e8bd00;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(232,189,0,.08);
+    box-shadow: 0 0 0 2px rgba(232,189,0,.08);
 }
 
-
-/* ==========================================================
-   CONFIRM BUTTON
-========================================================== */
+.address-input.mismatch {
+    border-color: #ff6464;
+    box-shadow: 0 0 0 2px rgba(255,70,70,.08);
+}
 
 .confirm-btn {
-
-    flex:
-        0 0 92px;
-
-    width: 92px;
-
+    flex: 0 0 92px;
     height: 51px;
-
     border: none;
-
     border-radius: 14px;
-
     background: #f0c000;
-
     color: #111111;
-
     font-size: 13px;
-
     font-weight: 900;
-
     cursor: pointer;
-
-    transition:
-        transform .15s ease,
-        filter .15s ease;
-
-    white-space: nowrap;
+    transition: transform .15s ease, filter .15s ease;
 }
 
-
 .confirm-btn:active {
-
     transform: scale(.97);
 }
 
-
 .confirm-btn:hover {
-
     filter: brightness(1.06);
 }
 
-
-/* ==========================================================
-   STATUS
-========================================================== */
-
-.status {
-
-    width: 100%;
-
-    min-height: 18px;
-
-    margin-top: 8px;
-
-    text-align: center;
-
-    font-size: 12px;
-
-    line-height: 1.4;
-
-    overflow-wrap: anywhere;
+.confirm-btn:disabled {
+    opacity: .6;
+    cursor: default;
 }
 
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    min-height: 18px;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.4;
+}
 
 .status.error {
-
     color: #ff8585;
 }
 
-
 .status.success {
-
     color: #7ee5ae;
 }
 
-
 .status.loading {
-
     color: #e5c94b;
 }
 
-
-/* ==========================================================
+/* =========================
    CONNECTED STATE
-========================================================== */
+========================= */
 
 .connected-box {
-
     display: none;
-
-    width: 100%;
-
-    max-width: 100%;
-
     margin-top: 10px;
-
     padding: 12px;
-
     border-radius: 16px;
-
     background: #0d261b;
-
-    border:
-        1px solid
-        rgba(40,200,120,.30);
-
+    border: 1px solid rgba(40,200,120,.30);
     text-align: center;
-
-    overflow: hidden;
 }
-
 
 .connected-title {
-
     color: #9af0c2;
-
     font-size: 15px;
-
     font-weight: 900;
-
-    overflow-wrap: anywhere;
 }
-
 
 .connected-address {
-
     margin-top: 7px;
-
     color: #c6c6ca;
-
     font-size: 11px;
-
     word-break: break-all;
-
-    overflow-wrap: anywhere;
-
     line-height: 1.45;
-
-    max-width: 100%;
 }
 
-
 .use-wallet {
-
     margin-top: 10px;
-
     width: 100%;
-
-    max-width: 100%;
-
     height: 43px;
-
     border: 0;
-
     border-radius: 12px;
-
     background: #f0c000;
-
     color: #111;
-
     font-weight: 900;
-
     cursor: pointer;
 }
 
-
-/* ==========================================================
+/* =========================
    FOOTER
-========================================================== */
+========================= */
 
 .footer {
-
     margin-top: auto;
-
     padding-top: 10px;
-
     text-align: center;
-
     color: #66666b;
-
     font-size: 12px;
-
-    max-width: 100%;
-
-    overflow-wrap: anywhere;
 }
 
-
-/* ==========================================================
+/* =========================
    SMALL SCREENS
-========================================================== */
+========================= */
 
 @media (max-height: 700px) {
 
     body {
-
-        padding:
-            7px 8px;
+        padding: 7px 8px;
     }
 
-
     .app {
-
-        min-height:
-            calc(100vh - 14px);
-
-        padding:
-            15px 15px 11px;
-
+        min-height: calc(100vh - 14px);
+        padding: 15px 15px 11px;
         border-radius: 27px;
     }
 
-
     .logo {
-
         width: 45px;
-
         height: 45px;
-
         margin-bottom: 2px;
     }
 
-
     .brand {
-
         font-size: 31px;
     }
 
-
     .subtitle {
-
         font-size: 20px;
-
         margin-top: 9px;
     }
 
-
     .description {
-
         margin-top: 7px;
-
         font-size: 14px;
     }
 
-
     .security {
-
-        margin:
-            8px 0 9px;
-
-        padding:
-            8px 10px;
+        margin: 8px 0 9px;
+        padding: 8px 10px;
     }
 
-
     .security-title {
-
         font-size: 13px;
     }
 
-
     .security-text {
-
         font-size: 10px;
     }
-
 
     .card,
     .manual-card {
-
         padding: 12px;
-
         border-radius: 18px;
     }
 
-
     .card-title {
-
         font-size: 18px;
     }
 
-
     .card-description,
     .manual-description {
-
         font-size: 12px;
-
         margin-bottom: 8px;
     }
 
-
     .address-input,
     .confirm-btn {
-
         height: 45px;
     }
 
-
     .confirm-btn {
-
         flex-basis: 82px;
-
-        width: 82px;
-
         font-size: 12px;
     }
 
-
     .footer {
-
         padding-top: 6px;
-
         font-size: 10px;
     }
-
 }
-
-
-/* ==========================================================
-   VERY SMALL WIDTH
-========================================================== */
 
 @media (max-width: 370px) {
 
     .app {
-
         padding-left: 11px;
-
         padding-right: 11px;
     }
 
-
     .address-row {
-
         gap: 6px;
     }
 
-
     .address-input {
-
         font-size: 11px;
-
-        padding:
-            0 9px;
+        padding: 0 9px;
     }
-
 
     .confirm-btn {
-
         flex-basis: 75px;
-
-        width: 75px;
-
         font-size: 11px;
     }
-
 }
-
-
-/* ==========================================================
-   EXTRA SAFETY AGAINST HORIZONTAL OVERFLOW
-========================================================== */
-
-html,
-body,
-.app,
-.card,
-.manual-card,
-.logo-wrap,
-#ton-connect,
-.connected-box {
-
-    overflow-x: hidden !important;
-
-    max-width: 100vw;
-}
-
-
-img,
-button,
-input,
-div,
-section,
-header,
-footer {
-
-    max-width: 100%;
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
 
-
-    <!-- ======================================================
-         HEADER
-    ======================================================= -->
-
+    <!-- HEADER -->
     <header class="logo-wrap">
-
 
         <img
             src="https://raw.githubusercontent.com/mexotoken/mexotoken/main/logo.png"
@@ -1017,16 +474,11 @@ footer {
             alt="MEXO Logo"
         >
 
-
-        <h1 class="brand">
-            MEXO
-        </h1>
-
+        <h1 class="brand">MEXO</h1>
 
         <div class="subtitle">
             ADD YOUR TON WALLET
         </div>
-
 
         <div class="security">
 
@@ -1041,102 +493,67 @@ footer {
 
         </div>
 
-
         <div class="description">
             Choose how you want to receive your MEXO airdrop.
         </div>
 
-
     </header>
 
 
-
-    <!-- ======================================================
-         CONNECT WALLET
-    ======================================================= -->
-
+    <!-- DIRECT CONNECT -->
     <section class="card">
-
 
         <div class="card-title">
             🔗 Connect Wallet
         </div>
 
-
         <div class="card-description">
-
             Connect your supported TON wallet.<br>
-
             No transaction is requested.
-
         </div>
-
 
         <div id="ton-connect"></div>
 
-
-        <div
-            id="connectedBox"
-            class="connected-box"
-        >
-
+        <div id="connectedBox" class="connected-box">
 
             <div class="connected-title">
                 ✅ TON WALLET CONNECTED
             </div>
 
-
             <div
                 class="connected-address"
-                id="connectedAddress"
-            ></div>
-
+                id="connectedAddress">
+            </div>
 
             <button
                 class="use-wallet"
-                id="useConnectedWallet"
-                type="button"
-            >
+                id="useConnectedWallet">
                 USE THIS WALLET
             </button>
 
-
         </div>
-
 
     </section>
 
 
-
-    <!-- ======================================================
-         OR
-    ======================================================= -->
-
+    <!-- OR -->
     <div class="or">
         OR
     </div>
 
 
-
-    <!-- ======================================================
-         MANUAL WALLET
-    ======================================================= -->
-
+    <!-- MANUAL ADDRESS -->
     <section class="manual-card">
-
 
         <div class="manual-title">
             ✏️ Enter TON Address
         </div>
 
-
         <div class="manual-description">
             Prefer to enter your wallet address manually.
         </div>
 
-
         <div class="address-row">
-
 
             <input
                 id="walletAddress"
@@ -1149,40 +566,24 @@ footer {
                 placeholder="EQ... or UQ..."
             >
 
-
             <button
                 id="confirmBtn"
-                class="confirm-btn"
-                type="button"
-            >
+                class="confirm-btn">
                 CONFIRM
             </button>
 
-
         </div>
 
-
-        <div
-            id="status"
-            class="status"
-        ></div>
-
+        <div id="status" class="status"></div>
 
     </section>
 
-
-
-    <!-- ======================================================
-         FOOTER
-    ======================================================= -->
 
     <footer class="footer">
         MEXO • TON Wallet
     </footer>
 
-
 </div>
-
 
 
 <script>
@@ -1191,16 +592,14 @@ footer {
    MEXO CONFIG
 ========================================================== */
 
-const BOT_USERNAME =
-    "mexoairdrop_bot";
-
+const BOT_USERNAME = "mexoairdrop_bot";
 
 const MANIFEST_URL =
     "https://mexotoken.github.io/mexotoken/ton-connect-test/tonconnect-manifest.json";
 
 
 /* ==========================================================
-   TELEGRAM WEB APP
+   TELEGRAM
 ========================================================== */
 
 const tg =
@@ -1209,25 +608,10 @@ const tg =
         ? window.Telegram.WebApp
         : null;
 
-
 if (tg) {
 
-    try {
-
-        tg.ready();
-
-        tg.expand();
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Telegram WebApp error:",
-            error
-        );
-
-    }
+    tg.ready();
+    tg.expand();
 
 }
 
@@ -1237,166 +621,56 @@ if (tg) {
 ========================================================== */
 
 const addressInput =
-    document.getElementById(
-        "walletAddress"
-    );
-
+    document.getElementById("walletAddress");
 
 const confirmBtn =
-    document.getElementById(
-        "confirmBtn"
-    );
-
+    document.getElementById("confirmBtn");
 
 const statusBox =
-    document.getElementById(
-        "status"
-    );
-
+    document.getElementById("status");
 
 const connectedBox =
-    document.getElementById(
-        "connectedBox"
-    );
-
+    document.getElementById("connectedBox");
 
 const connectedAddress =
-    document.getElementById(
-        "connectedAddress"
-    );
-
+    document.getElementById("connectedAddress");
 
 const useConnectedWallet =
-    document.getElementById(
-        "useConnectedWallet"
-    );
+    document.getElementById("useConnectedWallet");
 
 
 /* ==========================================================
-   SESSION ID
-========================================================== */
-
-function getSessionId() {
-
-    try {
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-        return (
-            params.get("sid")
-            || "default"
-        );
-
-    }
-
-    catch {
-
-        return "default";
-
-    }
-
-}
-
-
-const SESSION_ID =
-    getSessionId();
-
-
-/* ==========================================================
-   LOCAL STORAGE KEY
+   STORAGE
 ========================================================== */
 
 const STORAGE_KEY =
-    "mexo_wallet_" +
-    SESSION_ID;
+    "mexo_wallet_address";
+
+const CONNECTED_STORAGE_KEY =
+    "mexo_connected_wallet_address";
 
 
 /* ==========================================================
    STATUS
 ========================================================== */
 
-function setStatus(
-    text,
-    type
-) {
+function setStatus(message, type) {
 
-    statusBox.textContent =
-        text || "";
-
+    statusBox.textContent = message;
 
     statusBox.className =
-        "status " +
-        (type || "");
+        "status " + (type || "");
 
 }
 
 
 /* ==========================================================
-   SAVE MANUAL ADDRESS
+   NORMALIZE ADDRESS
 ========================================================== */
 
-function saveManualAddress(
-    address
-) {
+function normalizeAddress(address) {
 
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            address
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Could not save wallet:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================================
-   LOAD MANUAL ADDRESS
-========================================================== */
-
-function loadManualAddress() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-
-        if (
-            saved &&
-            saved.trim() !== ""
-        ) {
-
-            addressInput.value =
-                saved;
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Could not load wallet:",
-            error
-        );
-
-    }
+    return String(address || "").trim();
 
 }
 
@@ -1405,17 +679,19 @@ function loadManualAddress() {
    TON ADDRESS VALIDATION
 ========================================================== */
 
-function isValidTonAddress(
-    address
-) {
+function isValidTonAddress(address) {
 
     address =
-        address.trim();
+        normalizeAddress(address);
 
+    /*
+       Friendly TON address:
+       EQ + 46 characters
+       UQ + 46 characters
+    */
 
     if (
-        /^(EQ|UQ)[A-Za-z0-9_-]{46}$/
-            .test(address)
+        /^(EQ|UQ)[A-Za-z0-9_-]{46}$/.test(address)
     ) {
 
         return true;
@@ -1423,9 +699,13 @@ function isValidTonAddress(
     }
 
 
+    /*
+       Raw TON address:
+       0: + 64 hexadecimal characters
+    */
+
     if (
-        /^0:[a-fA-F0-9]{64}$/
-            .test(address)
+        /^0:[a-fA-F0-9]{64}$/.test(address)
     ) {
 
         return true;
@@ -1439,36 +719,204 @@ function isValidTonAddress(
 
 
 /* ==========================================================
-   RETURN TO TELEGRAM BOT
+   SAVE ADDRESS LOCALLY
 ========================================================== */
 
-function returnToBot(
-    address
-) {
+function saveAddress(address) {
 
     address =
-        address.trim();
-
+        normalizeAddress(address);
 
     if (!address) {
-
         return;
+    }
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            address
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Could not save wallet address:",
+            error
+        );
 
     }
 
-
-    /* ------------------------------------------
-       SAVE BEFORE RETURN
-    ------------------------------------------ */
-
-    saveManualAddress(
-        address
-    );
+}
 
 
-    /* ------------------------------------------
-       TELEGRAM WEB APP
-    ------------------------------------------ */
+/* ==========================================================
+   LOAD PREVIOUS ADDRESS
+========================================================== */
+
+function loadSavedAddress() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+        if (
+            saved &&
+            isValidTonAddress(saved)
+        ) {
+
+            addressInput.value =
+                saved;
+
+        }
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Could not load wallet address:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================
+   SAVE CONNECTED WALLET
+========================================================== */
+
+function saveConnectedWallet(address) {
+
+    address =
+        normalizeAddress(address);
+
+    if (!address) {
+        return;
+    }
+
+    try {
+
+        localStorage.setItem(
+            CONNECTED_STORAGE_KEY,
+            address
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Could not save connected wallet:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================
+   LOAD CONNECTED WALLET
+========================================================== */
+
+function loadConnectedWallet() {
+
+    try {
+
+        return normalizeAddress(
+            localStorage.getItem(
+                CONNECTED_STORAGE_KEY
+            )
+        );
+
+    }
+    catch (error) {
+
+        return "";
+
+    }
+
+}
+
+
+/* ==========================================================
+   CLEAR CONNECTED WALLET
+========================================================== */
+
+function clearConnectedWallet() {
+
+    try {
+
+        localStorage.removeItem(
+            CONNECTED_STORAGE_KEY
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Could not clear connected wallet:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================
+   SHOW CONNECTED WALLET
+========================================================== */
+
+function showConnectedWallet(address) {
+
+    address =
+        normalizeAddress(address);
+
+    if (!address) {
+        return;
+    }
+
+    connectedAddress.textContent =
+        address;
+
+    connectedBox.style.display =
+        "block";
+
+}
+
+
+/* ==========================================================
+   RETURN TO TELEGRAM
+========================================================== */
+
+function returnToBot(address) {
+
+    address =
+        normalizeAddress(address);
+
+    if (!address) {
+        return;
+    }
+
+
+    /*
+       Save the selected wallet locally.
+       This allows the address to remain visible
+       if the wallet page is opened again.
+    */
+
+    saveAddress(address);
+
+
+    /*
+       Telegram Web App communication.
+    */
 
     if (
         tg &&
@@ -1478,25 +926,18 @@ function returnToBot(
         try {
 
             tg.sendData(
-
                 JSON.stringify({
 
-                    type:
-                        "mexo_wallet",
+                    type: "mexo_wallet",
 
-                    address:
-                        address,
-
-                    session:
-                        SESSION_ID
+                    address: address
 
                 })
-
             );
 
 
             setStatus(
-                "Wallet confirmed. Returning to Telegram...",
+                "Wallet address confirmed. Returning to Telegram...",
                 "success"
             );
 
@@ -1504,26 +945,11 @@ function returnToBot(
             setTimeout(
                 function () {
 
-                    try {
+                    if (
+                        typeof tg.close === "function"
+                    ) {
 
-                        if (
-                            tg &&
-                            typeof tg.close ===
-                            "function"
-                        ) {
-
-                            tg.close();
-
-                        }
-
-                    }
-
-                    catch (error) {
-
-                        console.error(
-                            "Telegram close error:",
-                            error
-                        );
+                        tg.close();
 
                     }
 
@@ -1535,7 +961,6 @@ function returnToBot(
             return;
 
         }
-
         catch (error) {
 
             console.error(
@@ -1548,15 +973,12 @@ function returnToBot(
     }
 
 
-    /* ------------------------------------------
-       BROWSER FALLBACK
-    ------------------------------------------ */
+    /*
+       Browser fallback.
+    */
 
     const encodedAddress =
-        encodeURIComponent(
-            address
-        );
-
+        encodeURIComponent(address);
 
     window.location.href =
         "https://t.me/" +
@@ -1575,11 +997,22 @@ confirmBtn.addEventListener(
     "click",
     function () {
 
-        const address =
-            addressInput.value.trim();
+        const manualAddress =
+            normalizeAddress(
+                addressInput.value
+            );
 
 
-        if (!address) {
+        addressInput.classList.remove(
+            "mismatch"
+        );
+
+
+        /* ------------------------------------------
+           EMPTY
+        ------------------------------------------ */
+
+        if (!manualAddress) {
 
             setStatus(
                 "Please enter your TON wallet address.",
@@ -1593,11 +1026,11 @@ confirmBtn.addEventListener(
         }
 
 
-        if (
-            !isValidTonAddress(
-                address
-            )
-        ) {
+        /* ------------------------------------------
+           FORMAT VALIDATION
+        ------------------------------------------ */
+
+        if (!isValidTonAddress(manualAddress)) {
 
             setStatus(
                 "Invalid TON wallet address.",
@@ -1611,8 +1044,82 @@ confirmBtn.addEventListener(
         }
 
 
-        saveManualAddress(
-            address
+        /* ------------------------------------------
+           CONNECTED WALLET CHECK
+        ------------------------------------------ */
+
+        let connectedWalletAddress = "";
+
+
+        /*
+           First try the current TON Connect wallet.
+        */
+
+        if (
+            tonConnectUI &&
+            tonConnectUI.wallet &&
+            tonConnectUI.wallet.account &&
+            tonConnectUI.wallet.account.address
+        ) {
+
+            connectedWalletAddress =
+                normalizeAddress(
+                    tonConnectUI.wallet.account.address
+                );
+
+        }
+
+
+        /*
+           If TON Connect object is not immediately
+           available, use the stored connected wallet.
+        */
+
+        if (!connectedWalletAddress) {
+
+            connectedWalletAddress =
+                loadConnectedWallet();
+
+        }
+
+
+        /*
+           IMPORTANT:
+           If a wallet is connected, the manually
+           entered address MUST match it.
+        */
+
+        if (connectedWalletAddress) {
+
+            if (
+                manualAddress !==
+                connectedWalletAddress
+            ) {
+
+                addressInput.classList.add(
+                    "mismatch"
+                );
+
+                setStatus(
+                    "❌ WALLET ADDRESS MISMATCH — The address you entered does not match the connected wallet.",
+                    "error"
+                );
+
+                addressInput.focus();
+
+                return;
+
+            }
+
+        }
+
+
+        /* ------------------------------------------
+           ACCEPT
+        ------------------------------------------ */
+
+        saveAddress(
+            manualAddress
         );
 
 
@@ -1625,7 +1132,6 @@ confirmBtn.addEventListener(
         confirmBtn.disabled =
             true;
 
-
         confirmBtn.style.opacity =
             "0.65";
 
@@ -1634,7 +1140,7 @@ confirmBtn.addEventListener(
             function () {
 
                 returnToBot(
-                    address
+                    manualAddress
                 );
 
             },
@@ -1654,8 +1160,7 @@ addressInput.addEventListener(
     function (event) {
 
         if (
-            event.key ===
-            "Enter"
+            event.key === "Enter"
         ) {
 
             event.preventDefault();
@@ -1669,18 +1174,39 @@ addressInput.addEventListener(
 
 
 /* ==========================================================
-   LOAD SAVED MANUAL ADDRESS
+   CLEAR MISMATCH ERROR WHEN USER EDITS
 ========================================================== */
 
-loadManualAddress();
+addressInput.addEventListener(
+    "input",
+    function () {
+
+        addressInput.classList.remove(
+            "mismatch"
+        );
+
+        if (
+            statusBox.classList.contains(
+                "error"
+            )
+        ) {
+
+            setStatus(
+                "",
+                ""
+            );
+
+        }
+
+    }
+);
 
 
 /* ==========================================================
    TON CONNECT
 ========================================================== */
 
-let tonConnectUI =
-    null;
+let tonConnectUI = null;
 
 
 try {
@@ -1697,15 +1223,20 @@ try {
         });
 
 
-    /* ------------------------------------------
-       WALLET STATUS
-    ------------------------------------------ */
+    /*
+       Wallet status listener.
+    */
 
     tonConnectUI.onStatusChange(
         function (wallet) {
 
-
             if (!wallet) {
+
+                /*
+                   Do not immediately delete the saved
+                   address. The user may simply have
+                   reopened the page.
+                */
 
                 connectedBox.style.display =
                     "none";
@@ -1718,36 +1249,42 @@ try {
             const address =
                 wallet.account &&
                 wallet.account.address
-                    ? wallet.account.address
+                    ? normalizeAddress(
+                        wallet.account.address
+                    )
                     : "";
 
 
             if (!address) {
-
                 return;
-
             }
 
 
-            /* ----------------------------------
-               SAVE CONNECTED WALLET
-            ---------------------------------- */
+            /*
+               Save the currently connected wallet.
+            */
 
-            saveManualAddress(
+            saveConnectedWallet(
                 address
             );
 
 
-            /* ----------------------------------
-               SHOW CONNECTED WALLET
-            ---------------------------------- */
+            /*
+               Keep the same wallet address in
+               the manual field as well.
+            */
 
-            connectedAddress.textContent =
+            saveAddress(
+                address
+            );
+
+            addressInput.value =
                 address;
 
 
-            connectedBox.style.display =
-                "block";
+            showConnectedWallet(
+                address
+            );
 
 
             setStatus(
@@ -1759,15 +1296,50 @@ try {
     );
 
 
-}
+    /*
+       Restore an already connected wallet
+       when the page is opened again.
+    */
 
+    if (
+        tonConnectUI.wallet &&
+        tonConnectUI.wallet.account &&
+        tonConnectUI.wallet.account.address
+    ) {
+
+        const restoredAddress =
+            normalizeAddress(
+                tonConnectUI.wallet.account.address
+            );
+
+        if (restoredAddress) {
+
+            saveConnectedWallet(
+                restoredAddress
+            );
+
+            saveAddress(
+                restoredAddress
+            );
+
+            addressInput.value =
+                restoredAddress;
+
+            showConnectedWallet(
+                restoredAddress
+            );
+
+        }
+
+    }
+
+}
 catch (error) {
 
     console.error(
         "TON Connect initialization error:",
         error
     );
-
 
     setStatus(
         "TON Connect could not be initialized.",
@@ -1785,77 +1357,38 @@ useConnectedWallet.addEventListener(
     "click",
     function () {
 
+        let address = "";
+
+
+        /*
+           Get the live connected wallet first.
+        */
 
         if (
-            !tonConnectUI
+            tonConnectUI &&
+            tonConnectUI.wallet &&
+            tonConnectUI.wallet.account &&
+            tonConnectUI.wallet.account.address
         ) {
 
-            setStatus(
-                "Wallet connection is not available.",
-                "error"
-            );
-
-            return;
+            address =
+                normalizeAddress(
+                    tonConnectUI.wallet.account.address
+                );
 
         }
 
 
-        let address =
-            "";
-
-
-        try {
-
-            if (
-                tonConnectUI.wallet &&
-                tonConnectUI.wallet.account &&
-                tonConnectUI.wallet.account.address
-            ) {
-
-                address =
-                    tonConnectUI.wallet.account.address;
-
-            }
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Wallet address error:",
-                error
-            );
-
-        }
-
-
-        /* ------------------------------------------
-           FALLBACK TO SAVED ADDRESS
-        ------------------------------------------ */
+        /*
+           Fallback to saved connected wallet.
+        */
 
         if (!address) {
 
-            try {
-
-                address =
-                    localStorage.getItem(
-                        STORAGE_KEY
-                    ) || "";
-
-            }
-
-            catch {
-
-                address =
-                    "";
-
-            }
+            address =
+                loadConnectedWallet();
 
         }
-
-
-        address =
-            address.trim();
 
 
         if (!address) {
@@ -1870,7 +1403,28 @@ useConnectedWallet.addEventListener(
         }
 
 
-        saveManualAddress(
+        if (!isValidTonAddress(address)) {
+
+            setStatus(
+                "The connected wallet address is invalid.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Put the connected address into the
+           manual field as well.
+        */
+
+        addressInput.value =
+            address;
+
+
+        saveAddress(
             address
         );
 
@@ -1879,14 +1433,6 @@ useConnectedWallet.addEventListener(
             "Wallet confirmed. Returning to Telegram...",
             "success"
         );
-
-
-        useConnectedWallet.disabled =
-            true;
-
-
-        useConnectedWallet.style.opacity =
-            "0.65";
 
 
         setTimeout(
@@ -1905,24 +1451,38 @@ useConnectedWallet.addEventListener(
 
 
 /* ==========================================================
-   FINAL OVERFLOW PROTECTION
+   INITIAL LOAD
 ========================================================== */
 
-window.addEventListener(
-    "load",
-    function () {
+loadSavedAddress();
 
-        document.documentElement.style.overflowX =
-            "hidden";
 
-        document.body.style.overflowX =
-            "hidden";
+/*
+   If a previously connected wallet exists,
+   show it immediately while TON Connect restores
+   the actual connection.
+*/
 
-    }
-);
+const previouslyConnected =
+    loadConnectedWallet();
+
+if (
+    previouslyConnected &&
+    isValidTonAddress(
+        previouslyConnected
+    )
+) {
+
+    addressInput.value =
+        previouslyConnected;
+
+    showConnectedWallet(
+        previouslyConnected
+    );
+
+}
 
 </script>
-
 
 </body>
 </html>
