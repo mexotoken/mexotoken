@@ -2,15 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>MEXO • TON Wallet</title>
 
-<!-- Telegram Web App -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<!-- TON Connect UI -->
 <script src="https://unpkg.com/@tonconnect/ui@2.3.0/dist/tonconnect-ui.min.js"></script>
 
 <style>
@@ -41,9 +37,9 @@ body {
     max-width: 640px;
     min-height: calc(100vh - 24px);
     background:
-        radial-gradient(circle at top, rgba(255, 196, 0, 0.045), transparent 35%),
+        radial-gradient(circle at top, rgba(255,196,0,.045), transparent 35%),
         #151515;
-    border: 1px solid rgba(235, 190, 0, 0.55);
+    border: 1px solid rgba(235,190,0,.55);
     border-radius: 34px;
     padding: 24px 20px 18px;
     display: flex;
@@ -59,7 +55,6 @@ body {
 
 .logo-wrap {
     text-align: center;
-    margin-top: 2px;
 }
 
 .logo {
@@ -68,19 +63,7 @@ body {
     object-fit: contain;
     display: block;
     margin: 0 auto 5px;
-
-    /*
-       The supplied logo has a black background.
-       Screen mode visually removes the black area
-       on the dark page.
-    */
     mix-blend-mode: screen;
-}
-
-.logo-fallback {
-    display: none;
-    font-size: 50px;
-    margin-bottom: 2px;
 }
 
 .brand {
@@ -118,26 +101,25 @@ body {
     padding: 11px 13px;
     text-align: center;
     border: 1px solid rgba(255,255,255,.10);
-
     animation: securityLight 2s infinite ease-in-out;
 }
 
 @keyframes securityLight {
     0%, 45% {
         background: #0b2119;
-        border-color: rgba(35, 190, 110, .32);
-        box-shadow: 0 0 10px rgba(35, 190, 110, .05);
+        border-color: rgba(35,190,110,.32);
+        box-shadow: 0 0 10px rgba(35,190,110,.05);
     }
 
     50%, 95% {
         background: #321919;
-        border-color: rgba(255, 80, 80, .30);
-        box-shadow: 0 0 13px rgba(255, 70, 70, .07);
+        border-color: rgba(255,80,80,.30);
+        box-shadow: 0 0 13px rgba(255,70,70,.07);
     }
 
     100% {
         background: #0b2119;
-        border-color: rgba(35, 190, 110, .32);
+        border-color: rgba(35,190,110,.32);
     }
 }
 
@@ -180,7 +162,6 @@ body {
     margin-bottom: 12px;
 }
 
-/* TON Connect button container */
 #ton-connect {
     width: 100%;
     display: flex;
@@ -188,6 +169,7 @@ body {
 }
 
 #ton-connect button {
+    width: 100% !important;
     min-height: 52px !important;
     border-radius: 15px !important;
     font-size: 16px !important;
@@ -238,9 +220,6 @@ body {
     margin-bottom: 11px;
 }
 
-/*
-   Address + Confirm are on ONE ROW
-*/
 .address-row {
     display: flex;
     width: 100%;
@@ -316,18 +295,6 @@ body {
 }
 
 /* =========================
-   FOOTER
-========================= */
-
-.footer {
-    margin-top: auto;
-    padding-top: 10px;
-    text-align: center;
-    color: #66666b;
-    font-size: 12px;
-}
-
-/* =========================
    CONNECTED STATE
 ========================= */
 
@@ -337,7 +304,7 @@ body {
     padding: 12px;
     border-radius: 16px;
     background: #0d261b;
-    border: 1px solid rgba(40, 200, 120, .30);
+    border: 1px solid rgba(40,200,120,.30);
     text-align: center;
 }
 
@@ -365,6 +332,18 @@ body {
     color: #111;
     font-weight: 900;
     cursor: pointer;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    margin-top: auto;
+    padding-top: 10px;
+    text-align: center;
+    color: #66666b;
+    font-size: 12px;
 }
 
 /* =========================
@@ -479,15 +458,12 @@ body {
     <!-- HEADER -->
     <header class="logo-wrap">
 
+        <!-- MEXO LOGO FROM GITHUB -->
         <img
-            src="logo.png"
+            src="https://raw.githubusercontent.com/mexotoken/mexotoken/main/logo.png"
             class="logo"
-            id="mexoLogo"
             alt="MEXO Logo"
-            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='block';"
         >
-
-        <div id="logoFallback" class="logo-fallback">🔶</div>
 
         <h1 class="brand">MEXO</h1>
 
@@ -536,7 +512,10 @@ body {
                 ✅ TON WALLET CONNECTED
             </div>
 
-            <div class="connected-address" id="connectedAddress"></div>
+            <div
+                class="connected-address"
+                id="connectedAddress">
+            </div>
 
             <button
                 class="use-wallet"
@@ -566,6 +545,7 @@ body {
             Prefer to enter your wallet address manually.
         </div>
 
+        <!-- ADDRESS + CONFIRM IN ONE ROW -->
         <div class="address-row">
 
             <input
@@ -599,19 +579,34 @@ body {
 </div>
 
 
-<script type="module">
+<script>
 
 /* ==========================================================
-   MEXO TON WALLET PAGE
+   MEXO CONFIG
 ========================================================== */
 
 const BOT_USERNAME = "mexoairdrop_bot";
 
-const tg = window.Telegram?.WebApp;
+const MANIFEST_URL =
+    "https://mexotoken.github.io/mexotoken/ton-connect-test/tonconnect-manifest.json";
+
+
+/* ==========================================================
+   TELEGRAM
+========================================================== */
+
+const tg =
+    window.Telegram &&
+    window.Telegram.WebApp
+        ? window.Telegram.WebApp
+        : null;
 
 if (tg) {
+
     tg.ready();
+
     tg.expand();
+
 }
 
 
@@ -619,12 +614,21 @@ if (tg) {
    ELEMENTS
 ========================================================== */
 
-const addressInput = document.getElementById("walletAddress");
-const confirmBtn = document.getElementById("confirmBtn");
-const statusBox = document.getElementById("status");
+const addressInput =
+    document.getElementById("walletAddress");
 
-const connectedBox = document.getElementById("connectedBox");
-const connectedAddress = document.getElementById("connectedAddress");
+const confirmBtn =
+    document.getElementById("confirmBtn");
+
+const statusBox =
+    document.getElementById("status");
+
+const connectedBox =
+    document.getElementById("connectedBox");
+
+const connectedAddress =
+    document.getElementById("connectedAddress");
+
 const useConnectedWallet =
     document.getElementById("useConnectedWallet");
 
@@ -633,10 +637,12 @@ const useConnectedWallet =
    STATUS
 ========================================================== */
 
-function setStatus(message, type = "") {
+function setStatus(message, type) {
 
     statusBox.textContent = message;
-    statusBox.className = "status " + type;
+
+    statusBox.className =
+        "status " + (type || "");
 
 }
 
@@ -647,46 +653,56 @@ function setStatus(message, type = "") {
 
 function isValidTonAddress(address) {
 
-    address = address.trim();
+    address =
+        address.trim();
 
     /*
-       User-friendly TON formats:
+       Friendly TON addresses:
        EQ...
        UQ...
-       0:...
     */
 
-    if (/^(EQ|UQ)[A-Za-z0-9_-]{46}$/.test(address)) {
+    if (
+        /^(EQ|UQ)[A-Za-z0-9_-]{46}$/.test(address)
+    ) {
+
         return true;
+
     }
 
-    if (/^0:[a-fA-F0-9]{64}$/.test(address)) {
+
+    /*
+       Raw TON address:
+       0: + 64 hexadecimal characters
+    */
+
+    if (
+        /^0:[a-fA-F0-9]{64}$/.test(address)
+    ) {
+
         return true;
+
     }
+
 
     return false;
+
 }
 
 
 /* ==========================================================
-   RETURN TO TELEGRAM BOT
+   RETURN TO TELEGRAM
 ========================================================== */
 
 function returnToBot(address) {
 
-    address = address.trim();
+    address =
+        address.trim();
+
 
     /*
-       IMPORTANT:
-
-       If this page was opened as a Telegram Web App,
-       send the address directly back to the bot.
-
-       The bot will receive:
-       {
-          type: "mexo_wallet",
-          address: "..."
-       }
+       If opened inside Telegram Web App,
+       send the wallet address back to the bot.
     */
 
     if (
@@ -698,27 +714,41 @@ function returnToBot(address) {
 
             tg.sendData(
                 JSON.stringify({
+
                     type: "mexo_wallet",
+
                     address: address
+
                 })
             );
 
+
             setStatus(
-                "Wallet address submitted. Returning to Telegram...",
+                "Wallet address confirmed. Returning to Telegram...",
                 "success"
             );
 
-            setTimeout(() => {
 
-                if (typeof tg.close === "function") {
-                    tg.close();
-                }
+            setTimeout(
+                function () {
 
-            }, 400);
+                    if (
+                        typeof tg.close === "function"
+                    ) {
+
+                        tg.close();
+
+                    }
+
+                },
+                500
+            );
+
 
             return;
 
-        } catch (error) {
+        }
+        catch (error) {
 
             console.error(
                 "Telegram sendData error:",
@@ -726,24 +756,24 @@ function returnToBot(address) {
             );
 
         }
+
     }
 
 
     /*
-       Fallback for normal browser access.
-
-       Example:
-       https://t.me/mexoairdrop_bot?start=wallet_xxxxx
+       Browser fallback.
     */
 
     const encodedAddress =
         encodeURIComponent(address);
+
 
     window.location.href =
         "https://t.me/" +
         BOT_USERNAME +
         "?start=wallet_" +
         encodedAddress;
+
 }
 
 
@@ -751,71 +781,89 @@ function returnToBot(address) {
    MANUAL CONFIRM
 ========================================================== */
 
-confirmBtn.addEventListener("click", () => {
+confirmBtn.addEventListener(
+    "click",
+    function () {
 
-    const address =
-        addressInput.value.trim();
+        const address =
+            addressInput.value.trim();
 
-    if (!address) {
+
+        if (!address) {
+
+            setStatus(
+                "Please enter your TON wallet address.",
+                "error"
+            );
+
+            addressInput.focus();
+
+            return;
+
+        }
+
+
+        if (!isValidTonAddress(address)) {
+
+            setStatus(
+                "Invalid TON wallet address.",
+                "error"
+            );
+
+            addressInput.focus();
+
+            return;
+
+        }
+
 
         setStatus(
-            "Please enter your TON wallet address.",
-            "error"
+            "Address confirmed. Returning to Telegram...",
+            "loading"
         );
 
-        addressInput.focus();
-        return;
-    }
+
+        confirmBtn.disabled =
+            true;
 
 
-    if (!isValidTonAddress(address)) {
+        confirmBtn.style.opacity =
+            "0.65";
 
-        setStatus(
-            "Invalid TON wallet address.",
-            "error"
+
+        setTimeout(
+            function () {
+
+                returnToBot(address);
+
+            },
+            250
         );
 
-        addressInput.focus();
-        return;
     }
-
-
-    setStatus(
-        "Address confirmed. Returning to Telegram...",
-        "loading"
-    );
-
-    confirmBtn.disabled = true;
-    confirmBtn.style.opacity = "0.65";
-
-    /*
-       Return to bot
-    */
-
-    setTimeout(() => {
-
-        returnToBot(address);
-
-    }, 250);
-
-});
+);
 
 
 /* ==========================================================
    ENTER KEY
 ========================================================== */
 
-addressInput.addEventListener("keydown", (event) => {
+addressInput.addEventListener(
+    "keydown",
+    function (event) {
 
-    if (event.key === "Enter") {
+        if (
+            event.key === "Enter"
+        ) {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        confirmBtn.click();
+            confirmBtn.click();
+
+        }
 
     }
-
-});
+);
 
 
 /* ==========================================================
@@ -824,48 +872,50 @@ addressInput.addEventListener("keydown", (event) => {
 
 let tonConnectUI = null;
 
+
 try {
 
-    tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    tonConnectUI =
+        new TON_CONNECT_UI.TonConnectUI({
 
-        manifestUrl:
-            window.location.origin +
-            "/tonconnect-manifest.json",
+            manifestUrl:
+                MANIFEST_URL,
 
-        buttonRootId:
-            "ton-connect"
+            buttonRootId:
+                "ton-connect"
 
-    });
+        });
 
 
     /*
-       Detect wallet connection
+       Wallet status listener.
     */
 
     tonConnectUI.onStatusChange(
-        (wallet) => {
+        function (wallet) {
 
             if (!wallet) {
 
-                connectedBox.style.display = "none";
+                connectedBox.style.display =
+                    "none";
 
                 return;
+
             }
 
 
             const address =
-                wallet.account?.address || "";
+                wallet.account &&
+                wallet.account.address
+                    ? wallet.account.address
+                    : "";
 
 
             if (!address) {
+
                 return;
+
             }
-
-
-            console.log(
-                "TON wallet connected:",
-                address
-            );
 
 
             connectedAddress.textContent =
@@ -875,15 +925,27 @@ try {
             connectedBox.style.display =
                 "block";
 
+
+            setStatus(
+                "Wallet connected successfully.",
+                "success"
+            );
+
         }
     );
 
 
-} catch (error) {
+}
+catch (error) {
 
     console.error(
         "TON Connect initialization error:",
         error
+    );
+
+    setStatus(
+        "TON Connect could not be initialized.",
+        "error"
     );
 
 }
@@ -895,7 +957,7 @@ try {
 
 useConnectedWallet.addEventListener(
     "click",
-    () => {
+    function () {
 
         if (
             !tonConnectUI ||
@@ -903,16 +965,20 @@ useConnectedWallet.addEventListener(
         ) {
 
             setStatus(
-                "Wallet connection not available.",
+                "Wallet connection is not available.",
                 "error"
             );
 
             return;
+
         }
 
 
         const address =
-            tonConnectUI.wallet.account?.address;
+            tonConnectUI.wallet.account &&
+            tonConnectUI.wallet.account.address
+                ? tonConnectUI.wallet.account.address
+                : "";
 
 
         if (!address) {
@@ -923,6 +989,7 @@ useConnectedWallet.addEventListener(
             );
 
             return;
+
         }
 
 
@@ -932,11 +999,14 @@ useConnectedWallet.addEventListener(
         );
 
 
-        setTimeout(() => {
+        setTimeout(
+            function () {
 
-            returnToBot(address);
+                returnToBot(address);
 
-        }, 250);
+            },
+            250
+        );
 
     }
 );
