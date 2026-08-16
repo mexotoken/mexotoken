@@ -2,335 +2,643 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MEXO • Add TON Wallet</title>
+
     <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        name="description"
+        content="Add your TON wallet address for the MEXO airdrop."
     >
-
-    <title>MEXO Wallet</title>
-
-    <!-- Telegram Mini App -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <!-- TON Connect UI -->
-    <script src="https://unpkg.com/@tonconnect/ui@2.3.0/dist/tonconnect-ui.min.js"></script>
 
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            background: #0b0b0b;
+            color: #ffffff;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background:
-                radial-gradient(circle at top, #332500 0%, #111 45%, #050505 100%);
-            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 24px 14px;
         }
 
-        .container {
+        .page {
             width: 100%;
-            max-width: 430px;
-            background: rgba(20, 20, 20, 0.96);
-            border: 1px solid rgba(255, 193, 7, 0.25);
-            border-radius: 24px;
-            padding: 28px 22px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+            max-width: 620px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            width: 100%;
+            background: #181818;
+            border: 1px solid rgba(255, 193, 7, 0.35);
+            border-radius: 30px;
+            padding: 38px 28px 30px;
+            box-shadow:
+                0 20px 70px rgba(0, 0, 0, 0.65),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .brand {
             text-align: center;
+            margin-bottom: 12px;
         }
 
         .logo {
-            width: 76px;
-            height: 76px;
-            border-radius: 50%;
+            width: 74px;
+            height: 74px;
+            margin: 0 auto 14px;
+            border-radius: 20px;
             object-fit: contain;
-            margin-bottom: 14px;
+            display: block;
         }
 
-        h1 {
-            margin: 0 0 8px;
-            font-size: 26px;
+        .brand-title {
+            font-size: 42px;
+            font-weight: 800;
             letter-spacing: 1px;
         }
 
+        .brand-title span {
+            margin-right: 7px;
+        }
+
         .subtitle {
-            color: #bbbbbb;
-            font-size: 14px;
+            text-align: center;
+            color: #a8a8a8;
+            font-size: 17px;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        .intro {
+            text-align: center;
+            color: #b9b9b9;
+            font-size: 16px;
             line-height: 1.6;
-            margin-bottom: 24px;
+            margin: 25px auto 28px;
+            max-width: 490px;
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.035);
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 14px;
+            background: #202020;
+            border-radius: 22px;
+            padding: 25px;
+            margin-top: 20px;
         }
 
         .section-title {
-            font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 750;
+            margin-bottom: 12px;
         }
 
         .section-text {
-            color: #aaa;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        input {
-            width: 100%;
-            height: 48px;
-            border: 1px solid #444;
-            border-radius: 12px;
-            background: #0c0c0c;
-            color: #fff;
-            padding: 0 14px;
-            font-size: 13px;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: #d7a900;
-        }
-
-        button {
-            width: 100%;
-            height: 48px;
-            border: 0;
-            border-radius: 12px;
-            margin-top: 10px;
+            color: #a9a9a9;
             font-size: 15px;
-            font-weight: bold;
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .address-input {
+            width: 100%;
+            height: 64px;
+            border-radius: 17px;
+            border: 1px solid #444;
+            background: #0d0d0d;
+            color: #ffffff;
+            padding: 0 20px;
+            font-size: 17px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .address-input:focus {
+            border-color: #e6b800;
+            box-shadow: 0 0 0 3px rgba(230, 184, 0, 0.12);
+        }
+
+        .address-input.valid {
+            border-color: #22c55e;
+        }
+
+        .address-input.invalid {
+            border-color: #ef4444;
+        }
+
+        .button {
+            width: 100%;
+            min-height: 62px;
+            border: none;
+            border-radius: 17px;
+            font-size: 18px;
+            font-weight: 750;
             cursor: pointer;
+            transition:
+                transform 0.15s,
+                opacity 0.15s,
+                box-shadow 0.15s;
         }
 
-        .manual-button {
-            background: #d7a900;
-            color: #111;
-        }
-
-        .manual-button:active {
+        .button:active {
             transform: scale(0.98);
         }
 
-        .connect-area {
-            display: flex;
-            justify-content: center;
-            margin-top: 8px;
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        #ton-connect-button {
-            width: 100%;
+        .save-button {
+            margin-top: 14px;
+            background: #e7b800;
+            color: #111111;
+            box-shadow: 0 8px 24px rgba(231, 184, 0, 0.15);
         }
 
-        .security {
-            margin-top: 18px;
-            padding: 14px;
-            border-radius: 14px;
-            background: rgba(0, 180, 100, 0.08);
-            border: 1px solid rgba(0, 180, 100, 0.18);
-            color: #b9e8d0;
-            font-size: 12px;
+        .save-button:hover {
+            box-shadow: 0 10px 30px rgba(231, 184, 0, 0.25);
+        }
+
+        .connect-section {
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .connect-section:hover {
+            background: #252525;
+            transform: translateY(-1px);
+        }
+
+        .connect-icon {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .connect-title {
+            font-size: 23px;
+            font-weight: 750;
+        }
+
+        .connect-description {
+            color: #a7a7a7;
+            font-size: 15px;
             line-height: 1.6;
+            margin-top: 9px;
+        }
+
+        /*
+         * TON Connect UI needs a real DOM root.
+         * We keep it hidden because our custom card triggers openModal().
+         */
+        #ton-connect {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .status {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 20px;
+            background: #0d241b;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #b8e8ce;
+            text-align: center;
+            line-height: 1.7;
             display: none;
-            margin-top: 16px;
-            padding: 14px;
-            border-radius: 14px;
+        }
+
+        .status.visible {
+            display: block;
+        }
+
+        .status-title {
+            font-size: 18px;
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .status-address {
+            font-family: monospace;
             font-size: 13px;
-            line-height: 1.5;
+            color: #d4f5df;
             word-break: break-all;
+            margin-top: 8px;
         }
 
-        .status.success {
-            display: block;
-            background: rgba(0, 180, 100, 0.10);
-            border: 1px solid rgba(0, 180, 100, 0.25);
-            color: #b9e8d0;
+        .error {
+            margin-top: 20px;
+            padding: 19px;
+            border-radius: 18px;
+            background: #2a1111;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ffb4b4;
+            text-align: center;
+            line-height: 1.6;
+            display: none;
         }
 
-        .status.error {
+        .error.visible {
             display: block;
-            background: rgba(220, 50, 50, 0.10);
-            border: 1px solid rgba(220, 50, 50, 0.25);
-            color: #ffbaba;
+        }
+
+        .security {
+            margin-top: 24px;
+            background: #0c2118;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            border-radius: 22px;
+            padding: 25px;
+            text-align: center;
+            color: #b8e8ce;
+        }
+
+        .security-title {
+            font-size: 19px;
+            font-weight: 750;
+            margin-bottom: 17px;
+        }
+
+        .security p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .security p:last-child {
+            margin-bottom: 0;
+        }
+
+        .footer {
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+            margin-top: 25px;
         }
 
         .hidden {
             display: none !important;
         }
 
-        .small {
-            color: #777;
-            font-size: 11px;
-            margin-top: 18px;
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+                align-items: stretch;
+            }
+
+            .page {
+                min-height: 100vh;
+                padding: 16px 10px;
+            }
+
+            .card {
+                border-radius: 25px;
+                padding: 30px 18px 25px;
+            }
+
+            .brand-title {
+                font-size: 36px;
+            }
+
+            .logo {
+                width: 68px;
+                height: 68px;
+            }
+
+            .section {
+                padding: 20px 16px;
+            }
+
+            .section-title {
+                font-size: 21px;
+            }
+
+            .connect-title {
+                font-size: 21px;
+            }
+
+            .address-input {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="page">
 
-    <img
-        class="logo"
-        src="https://mexotoken.github.io/mexotoken/assets/logo.png"
-        alt="MEXO"
-    >
+    <main class="card">
 
-    <h1>💎 ADD YOUR TON WALLET</h1>
+        <!-- BRAND -->
+        <div class="brand">
 
-    <div class="subtitle">
-        Choose how you want to add your TON wallet address.
-    </div>
+            <!--
+                If your logo is stored somewhere else,
+                change this URL only.
+            -->
+            <img
+                class="logo"
+                src="assets/logo.png"
+                alt="MEXO"
+                onerror="this.style.display='none';"
+            >
 
+            <div class="brand-title">
+                <span>💎</span>MEXO
+            </div>
 
-    <!-- =========================================
-         MANUAL ADDRESS
-         ========================================= -->
+            <div class="subtitle">
+                ADD YOUR TON WALLET
+            </div>
 
-    <div class="section">
-
-        <div class="section-title">
-            ✏️ Enter TON Address
         </div>
 
-        <div class="section-text">
-            Enter your TON wallet address manually.
-            Your address will be checked before submission.
-        </div>
 
-        <input
-            id="wallet-address"
-            type="text"
-            placeholder="EQ... or UQ..."
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="none"
-            spellcheck="false"
+        <p class="intro">
+            Choose how you want to add your TON wallet address.
+        </p>
+
+
+        <!-- ==========================================
+             MANUAL ADDRESS
+             ========================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                ✏️ Enter TON Address
+            </div>
+
+            <div class="section-text">
+                Enter your TON wallet address manually.
+                Your address will be checked before submission.
+            </div>
+
+            <input
+                id="addressInput"
+                class="address-input"
+                type="text"
+                inputmode="text"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="EQ... or UQ..."
+                maxlength="48"
+            >
+
+            <button
+                id="saveButton"
+                class="button save-button"
+                type="button"
+            >
+                ✅ SAVE TON ADDRESS
+            </button>
+
+        </section>
+
+
+        <!-- ==========================================
+             TON CONNECT
+             ========================================== -->
+
+        <section
+            id="connectSection"
+            class="section connect-section"
         >
 
-        <button
-            class="manual-button"
-            id="manual-submit"
-        >
-            ✅ SAVE TON ADDRESS
-        </button>
+            <div class="connect-icon">
+                🔗
+            </div>
 
-    </div>
+            <div class="connect-title">
+                Connect TON Wallet
+            </div>
+
+            <div class="connect-description">
+                Connect any supported TON wallet.
+                No transaction is requested.
+            </div>
+
+            <!-- Required root for TON Connect UI -->
+            <div id="ton-connect"></div>
+
+        </section>
 
 
-    <!-- =========================================
-         TON CONNECT
-         ========================================= -->
+        <!-- ==========================================
+             CONNECTED STATUS
+             ========================================== -->
 
-    <div class="section">
+        <div id="connectedStatus" class="status">
 
-        <div class="section-title">
-            🔗 Connect TON Wallet
+            <div class="status-title">
+                ✅ TON WALLET CONNECTED
+            </div>
+
+            <div>
+                Your wallet address has been detected.
+            </div>
+
+            <div
+                id="connectedAddress"
+                class="status-address"
+            ></div>
+
+            <button
+                id="useConnectedButton"
+                class="button save-button"
+                type="button"
+                style="margin-top:18px;"
+            >
+                ✅ USE THIS WALLET
+            </button>
+
         </div>
 
-        <div class="section-text">
-            Connect any supported TON wallet.
-            No transaction is requested.
+
+        <!-- ==========================================
+             ERROR
+             ========================================== -->
+
+        <div id="errorBox" class="error">
+
+            <strong>❌ TON CONNECT ERROR</strong>
+
+            <div
+                id="errorText"
+                style="margin-top:8px;"
+            ></div>
+
         </div>
 
-        <div class="connect-area">
-            <div id="ton-connect-button"></div>
+
+        <!-- ==========================================
+             SECURITY
+             ========================================== -->
+
+        <section class="security">
+
+            <div class="security-title">
+                🔒 Security
+            </div>
+
+            <p>
+                MEXO only needs your TON wallet address
+                for the airdrop withdrawal process.
+            </p>
+
+            <p>
+                We never ask for your seed phrase,
+                private key, transaction approval,
+                or transfer of funds.
+            </p>
+
+        </section>
+
+
+        <div class="footer">
+            MEXO • TON Wallet
         </div>
 
-    </div>
-
-
-    <!-- =========================================
-         SECURITY
-         ========================================= -->
-
-    <div class="security">
-        🔒 <strong>Security</strong><br><br>
-
-        MEXO only needs your TON wallet address
-        for the airdrop withdrawal process.<br><br>
-
-        We never ask for your seed phrase,
-        private key, transaction approval,
-        or transfer of funds.
-    </div>
-
-
-    <!-- =========================================
-         STATUS
-         ========================================= -->
-
-    <div id="status" class="status"></div>
-
-    <div class="small">
-        MEXO • TON Wallet
-    </div>
+    </main>
 
 </div>
 
 
+<!--
+======================================================
+TON CONNECT UI
+Official CDN
+======================================================
+
+The official TON documentation exposes this package
+through window.TON_CONNECT_UI.
+======================================================
+-->
+
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
+
 <script>
+(function () {
 
-    // ==========================================
-    // TELEGRAM MINI APP
-    // ==========================================
+    "use strict";
 
-    const tg = window.Telegram
-        ? window.Telegram.WebApp
-        : null;
 
-    if (tg) {
-        tg.ready();
-        tg.expand();
+    /* ==========================================
+       CONFIGURATION
+       ========================================== */
+
+    /*
+     * IMPORTANT:
+     * This file must exist publicly at:
+     *
+     * https://mexotoken.github.io/tonconnect-manifest.json
+     *
+     * If your actual GitHub Pages URL is different,
+     * change this URL.
+     */
+
+    const MANIFEST_URL =
+        window.location.origin + "/tonconnect-manifest.json";
+
+
+    /* ==========================================
+       ELEMENTS
+       ========================================== */
+
+    const addressInput =
+        document.getElementById("addressInput");
+
+    const saveButton =
+        document.getElementById("saveButton");
+
+    const connectSection =
+        document.getElementById("connectSection");
+
+    const connectedStatus =
+        document.getElementById("connectedStatus");
+
+    const connectedAddress =
+        document.getElementById("connectedAddress");
+
+    const useConnectedButton =
+        document.getElementById("useConnectedButton");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+    const errorText =
+        document.getElementById("errorText");
+
+
+    /* ==========================================
+       ERROR HANDLING
+       ========================================== */
+
+    function showError(message) {
+
+        errorText.textContent = message;
+
+        errorBox.classList.add("visible");
     }
 
 
-    // ==========================================
-    // STATUS
-    // ==========================================
+    function hideError() {
 
-    function showStatus(message, type) {
-
-        const status = document.getElementById("status");
-
-        status.className = "status " + type;
-        status.innerHTML = message;
+        errorBox.classList.remove("visible");
+        errorText.textContent = "";
     }
 
 
-    // ==========================================
-    // BASE64URL DECODER
-    // ==========================================
+    /* ==========================================
+       BASE64URL
+       ========================================== */
 
     function base64UrlToBytes(value) {
 
         try {
 
-            let base64 = value
-                .replace(/-/g, "+")
-                .replace(/_/g, "/");
+            let base64 =
+                value
+                    .replace(/-/g, "+")
+                    .replace(/_/g, "/");
 
-            while (base64.length % 4) {
+            while (base64.length % 4 !== 0) {
                 base64 += "=";
             }
 
-            const binary = atob(base64);
+            const binary =
+                atob(base64);
 
-            const bytes = new Uint8Array(
-                binary.length
-            );
+            const bytes =
+                new Uint8Array(binary.length);
 
             for (let i = 0; i < binary.length; i++) {
                 bytes[i] = binary.charCodeAt(i);
@@ -345,9 +653,10 @@
     }
 
 
-    // ==========================================
-    // CRC16 XMODEM
-    // ==========================================
+    /* ==========================================
+       CRC16-CCITT
+       TON USER-FRIENDLY ADDRESS CHECKSUM
+       ========================================== */
 
     function crc16(data) {
 
@@ -362,14 +671,12 @@
                 if (crc & 0x8000) {
 
                     crc =
-                        ((crc << 1) ^ 0x1021)
-                        & 0xffff;
+                        ((crc << 1) ^ 0x1021) & 0xffff;
 
                 } else {
 
                     crc =
-                        (crc << 1)
-                        & 0xffff;
+                        (crc << 1) & 0xffff;
                 }
             }
         }
@@ -378,295 +685,587 @@
     }
 
 
-    // ==========================================
-    // VALIDATE FRIENDLY TON ADDRESS
-    // ==========================================
+    /* ==========================================
+       TON ADDRESS VALIDATION
+       ========================================== */
 
-    function validateFriendlyAddress(address) {
+    function validateTonAddress(address) {
 
         if (!address) {
-            return false;
+            return {
+                valid: false,
+                reason: "Please enter a TON wallet address."
+            };
         }
 
         address = address.trim();
 
 
-        // TON friendly addresses are 48 characters
-
+        /*
+         * TON user-friendly addresses are 48 characters.
+         */
         if (address.length !== 48) {
-            return false;
+
+            return {
+                valid: false,
+                reason:
+                    "TON address must contain 48 characters."
+            };
         }
 
 
-        // TON mainnet friendly address
-
+        /*
+         * We intentionally accept mainnet
+         * bounceable and non-bounceable forms:
+         *
+         * EQ...
+         * UQ...
+         *
+         * Testnet-only addresses are not accepted
+         * for the MEXO airdrop.
+         */
         if (
             !address.startsWith("EQ") &&
             !address.startsWith("UQ")
         ) {
-            return false;
+
+            return {
+                valid: false,
+                reason:
+                    "Please enter a mainnet TON address beginning with EQ... or UQ..."
+            };
         }
 
 
-        // Base64URL characters only
-
+        /*
+         * Base64url characters only.
+         */
         if (!/^[A-Za-z0-9_-]+$/.test(address)) {
-            return false;
+
+            return {
+                valid: false,
+                reason:
+                    "The TON address contains invalid characters."
+            };
         }
 
 
-        const bytes = base64UrlToBytes(address);
+        const bytes =
+            base64UrlToBytes(address);
 
-        if (!bytes) {
-            return false;
+        if (!bytes || bytes.length !== 36) {
+
+            return {
+                valid: false,
+                reason:
+                    "The TON address format is invalid."
+            };
         }
 
 
-        // 34-byte address payload + 2-byte CRC
+        /*
+         * TON user-friendly address:
+         *
+         * 34 bytes payload
+         * 2 bytes CRC16
+         */
+        const payload =
+            bytes.slice(0, 34);
 
-        if (bytes.length !== 36) {
-            return false;
+        const checksum =
+            (bytes[34] << 8) |
+            bytes[35];
+
+        const calculated =
+            crc16(payload);
+
+
+        if (checksum !== calculated) {
+
+            return {
+                valid: false,
+                reason:
+                    "The TON address checksum is invalid. Please check the address."
+            };
         }
 
 
-        // Mainnet bounceable / non-bounceable
-
+        /*
+         * Verify the mainnet flags.
+         *
+         * 0x11 = bounceable
+         * 0x51 = non-bounceable
+         */
         if (
             bytes[0] !== 0x11 &&
             bytes[0] !== 0x51
         ) {
-            return false;
+
+            return {
+                valid: false,
+                reason:
+                    "This address is not a supported mainnet TON address."
+            };
         }
 
 
-        const data = bytes.slice(0, 34);
+        /*
+         * TON base workchain.
+         *
+         * For normal user wallets the workchain is 0.
+         */
+        if (bytes[1] !== 0) {
 
-        const receivedCrc =
-            (bytes[34] << 8) |
-            bytes[35];
-
-        const calculatedCrc =
-            crc16(data);
-
-        return receivedCrc === calculatedCrc;
-    }
-
-
-    // ==========================================
-    // RAW TON ADDRESS VALIDATION
-    // ==========================================
-
-    function validateRawAddress(address) {
-
-        if (!address) {
-            return false;
+            return {
+                valid: false,
+                reason:
+                    "Only TON basechain wallet addresses are accepted."
+            };
         }
 
-        address = address.trim();
 
-        return /^-?[0-9a-fA-F]+:[0-9a-fA-F]{64}$/.test(
-            address
-        );
-    }
-
-
-    // ==========================================
-    // GENERAL TON ADDRESS VALIDATION
-    // ==========================================
-
-    function validateTonAddress(address) {
-
-        return (
-            validateFriendlyAddress(address) ||
-            validateRawAddress(address)
-        );
-    }
-
-
-    // ==========================================
-    // SEND ADDRESS TO TELEGRAM BOT
-    // ==========================================
-
-    function sendAddressToBot(address, method) {
-
-        const payload = JSON.stringify({
-            type: "mexo_wallet",
-            method: method,
+        return {
+            valid: true,
             address: address
-        });
-
-
-        // Telegram Mini App opened from a Telegram
-        // Web App button can return data to the Bot.
-
-        if (
-            tg &&
-            typeof tg.sendData === "function"
-        ) {
-
-            tg.sendData(payload);
-
-            return true;
-        }
-
-
-        // Browser test fallback
-
-        showStatus(
-            "✅ WALLET ADDRESS VERIFIED<br><br>" +
-            "<strong>" +
-            address +
-            "</strong><br><br>" +
-            "This page was opened outside Telegram, " +
-            "so the address cannot be sent to the Bot.",
-            "success"
-        );
-
-        return false;
+        };
     }
 
 
-    // ==========================================
-    // MANUAL ADDRESS
-    // ==========================================
+    /* ==========================================
+       INPUT NORMALIZATION
+       ========================================== */
 
-    document
-        .getElementById("manual-submit")
-        .addEventListener("click", function () {
+    addressInput.addEventListener(
+        "input",
+        function () {
 
-            const input =
-                document.getElementById(
-                    "wallet-address"
-                );
+            hideError();
+
+            this.value =
+                this.value
+                    .trim()
+                    .replace(/\s+/g, "");
+
+            this.classList.remove(
+                "valid",
+                "invalid"
+            );
+        }
+    );
+
+
+    /* ==========================================
+       SAVE MANUAL ADDRESS
+       ========================================== */
+
+    saveButton.addEventListener(
+        "click",
+        function () {
+
+            hideError();
 
             const address =
-                input.value.trim();
+                addressInput.value.trim();
+
+            const result =
+                validateTonAddress(address);
 
 
-            if (!address) {
+            if (!result.valid) {
 
-                showStatus(
-                    "❌ Please enter your TON wallet address.",
-                    "error"
-                );
+                addressInput.classList.remove("valid");
+                addressInput.classList.add("invalid");
 
-                return;
-            }
-
-
-            if (!validateTonAddress(address)) {
-
-                showStatus(
-                    "❌ INVALID TON WALLET ADDRESS<br><br>" +
-                    "Please check the address and try again.<br><br>" +
-                    "For best accuracy, copy and paste your TON address.",
-                    "error"
-                );
+                showError(result.reason);
 
                 return;
             }
 
 
-            showStatus(
-                "✅ TON ADDRESS VERIFIED<br><br>" +
-                "<strong>" +
-                address +
-                "</strong><br><br>" +
-                "Sending securely to MEXO Bot...",
-                "success"
+            addressInput.classList.remove("invalid");
+            addressInput.classList.add("valid");
+
+
+            /*
+             * Save locally for now.
+             *
+             * Later this value can be sent to the
+             * Telegram bot/backend when we build the
+             * actual airdrop submission system.
+             */
+            localStorage.setItem(
+                "mexo_ton_address",
+                result.address
             );
 
 
-            sendAddressToBot(
-                address,
-                "manual"
+            hideError();
+
+            connectedAddress.textContent =
+                result.address;
+
+            connectedStatus.classList.add(
+                "visible"
             );
 
-        });
+            connectedStatus.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+    );
 
 
-    // ==========================================
-    // TON CONNECT
-    // ==========================================
+    /* ==========================================
+       TON CONNECT INITIALIZATION
+       ========================================== */
 
     let tonConnectUI = null;
 
 
-    try {
+    function initializeTonConnect() {
 
-        tonConnectUI =
-            new TON_CONNECT_UI.TonConnectUI({
+        /*
+         * Check that the official CDN loaded.
+         */
+        if (
+            typeof window.TON_CONNECT_UI ===
+            "undefined"
+        ) {
 
-                manifestUrl:
-                    "https://mexotoken.github.io/mexotoken/ton-connect-test/tonconnect-manifest.json",
+            showError(
+                "TON Connect library could not be loaded. Please refresh the page."
+            );
 
-                buttonRootId:
-                    "ton-connect-button"
-
-            });
+            return false;
+        }
 
 
-        // ======================================
-        // CONNECTION STATUS
-        // ======================================
+        try {
 
-        tonConnectUI.onStatusChange(
-            function(wallet) {
+            tonConnectUI =
+                new window.TON_CONNECT_UI.TonConnectUI({
 
-                if (!wallet) {
-                    return;
+                    manifestUrl:
+                        MANIFEST_URL,
+
+                    /*
+                     * We use our own custom button/card.
+                     * Therefore no TON Connect button is
+                     * automatically rendered.
+                     */
+                    buttonRootId: null,
+
+                    /*
+                     * Explicit connection is better
+                     * for this wallet-entry page.
+                     */
+                    restoreConnection: true
+                });
+
+
+            /*
+             * Dark TON Connect wallet picker.
+             */
+            tonConnectUI.uiOptions = {
+
+                language: "en",
+
+                uiPreferences: {
+                    theme:
+                        window.TON_CONNECT_UI.THEME
+                            ? window.TON_CONNECT_UI.THEME.DARK
+                            : "DARK"
                 }
+            };
 
 
-                // TON Connect normally returns the
-                // raw TON address here.
+            /*
+             * Listen for connection changes.
+             */
+            tonConnectUI.onStatusChange(
+                function (wallet) {
 
-                const address =
-                    wallet.account &&
-                    wallet.account.address
-                        ? wallet.account.address
-                        : "";
+                    if (!wallet) {
+
+                        connectedStatus.classList.remove(
+                            "visible"
+                        );
+
+                        return;
+                    }
 
 
-                if (!address) {
+                    /*
+                     * The wallet account address returned
+                     * by TON Connect is a TON address.
+                     */
+                    const rawAddress =
+                        wallet.account.address;
 
-                    showStatus(
-                        "❌ Wallet connected, but no TON address was received.",
-                        "error"
+
+                    /*
+                     * Use the library helper when available
+                     * to convert raw address to EQ/UQ form.
+                     */
+                    let friendlyAddress =
+                        rawAddress;
+
+
+                    try {
+
+                        if (
+                            window.TON_CONNECT_UI
+                                .toUserFriendlyAddress
+                        ) {
+
+                            friendlyAddress =
+                                window.TON_CONNECT_UI
+                                    .toUserFriendlyAddress(
+                                        rawAddress,
+                                        false
+                                    );
+                        }
+
+                    } catch (conversionError) {
+
+                        /*
+                         * Keep the original address if
+                         * conversion is unavailable.
+                         */
+                    }
+
+
+                    connectedAddress.textContent =
+                        friendlyAddress;
+
+                    connectedStatus.classList.add(
+                        "visible"
                     );
 
+
+                    /*
+                     * Store the connected address locally.
+                     */
+                    localStorage.setItem(
+                        "mexo_ton_address",
+                        friendlyAddress
+                    );
+
+
+                    hideError();
+                }
+            );
+
+
+            /*
+             * Restore previous session.
+             */
+            tonConnectUI.connectionRestored
+                .then(function () {
+
+                    if (
+                        tonConnectUI.connected &&
+                        tonConnectUI.account
+                    ) {
+
+                        const rawAddress =
+                            tonConnectUI.account.address;
+
+                        let friendlyAddress =
+                            rawAddress;
+
+                        try {
+
+                            if (
+                                window.TON_CONNECT_UI
+                                    .toUserFriendlyAddress
+                            ) {
+
+                                friendlyAddress =
+                                    window.TON_CONNECT_UI
+                                        .toUserFriendlyAddress(
+                                            rawAddress,
+                                            false
+                                        );
+                            }
+
+                        } catch (e) {}
+
+
+                        connectedAddress.textContent =
+                            friendlyAddress;
+
+                        connectedStatus.classList.add(
+                            "visible"
+                        );
+                    }
+                })
+                .catch(function (error) {
+
+                    console.warn(
+                        "TON Connect restore error:",
+                        error
+                    );
+                });
+
+
+            return true;
+
+        } catch (error) {
+
+            showError(
+                "TON Connect initialization failed: " +
+                error.message
+            );
+
+            return false;
+        }
+    }
+
+
+    /* ==========================================
+       CUSTOM CONNECT BUTTON
+       ========================================== */
+
+    connectSection.addEventListener(
+        "click",
+        async function () {
+
+            hideError();
+
+
+            if (!tonConnectUI) {
+
+                const initialized =
+                    initializeTonConnect();
+
+                if (!initialized) {
                     return;
                 }
-
-
-                showStatus(
-                    "✅ WALLET CONNECTED<br><br>" +
-                    "<strong>" +
-                    address +
-                    "</strong><br><br>" +
-                    "Sending wallet address to MEXO Bot...",
-                    "success"
-                );
-
-
-                sendAddressToBot(
-                    address,
-                    "ton_connect"
-                );
-
             }
+
+
+            try {
+
+                /*
+                 * Opens the official TON wallet picker.
+                 *
+                 * No transaction.
+                 * No signature.
+                 * No payment.
+                 */
+                await tonConnectUI.openModal();
+
+            } catch (error) {
+
+                showError(
+                    error && error.message
+                        ? error.message
+                        : "Unable to open TON wallet connection."
+                );
+            }
+        }
+    );
+
+
+    /* ==========================================
+       USE CONNECTED WALLET
+       ========================================== */
+
+    useConnectedButton.addEventListener(
+        "click",
+        function () {
+
+            if (!tonConnectUI || !tonConnectUI.connected) {
+
+                showError(
+                    "Please connect a TON wallet first."
+                );
+
+                return;
+            }
+
+
+            const address =
+                connectedAddress.textContent.trim();
+
+
+            if (!address) {
+
+                showError(
+                    "Wallet address could not be detected."
+                );
+
+                return;
+            }
+
+
+            localStorage.setItem(
+                "mexo_ton_address",
+                address
+            );
+
+
+            /*
+             * For now we simply confirm the wallet.
+             *
+             * Later we connect this action to the
+             * Telegram airdrop bot/backend.
+             */
+            hideError();
+
+            alert(
+                "TON wallet added successfully."
+            );
+        }
+    );
+
+
+    /* ==========================================
+       LOAD SAVED ADDRESS
+       ========================================== */
+
+    const savedAddress =
+        localStorage.getItem(
+            "mexo_ton_address"
         );
 
 
-    } catch (error) {
+    if (savedAddress) {
 
-        showStatus(
-            "❌ TON CONNECT ERROR<br><br>" +
-            error.message,
-            "error"
+        addressInput.value =
+            savedAddress;
+
+        addressInput.classList.add(
+            "valid"
         );
     }
 
+
+    /* ==========================================
+       START TON CONNECT
+       ========================================== */
+
+    /*
+     * Wait until the CDN script has been parsed.
+     */
+    if (
+        document.readyState === "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeTonConnect
+        );
+
+    } else {
+
+        initializeTonConnect();
+    }
+
+
+})();
 </script>
 
 </body>
